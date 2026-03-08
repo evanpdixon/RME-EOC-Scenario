@@ -28,6 +28,7 @@ class RME_EOC_PDF_Generator {
      */
     public static function generate_all( $cfg, $assignments, $tasks ) {
         self::load_tcpdf();
+        set_time_limit( 300 );
 
         $output_dir = self::get_output_dir();
         $location   = $cfg['location'];
@@ -36,7 +37,7 @@ class RME_EOC_PDF_Generator {
         $contradictions = RME_EOC_Task_Definitions::build_contradictions( $cfg );
         $cross_refs     = RME_EOC_Task_Definitions::build_cross_refs( $cfg );
 
-        // Generate print-all PDF (facilitator + all students in one document)
+        // Build single print-all PDF: facilitator reference + all student cards
         $print_all_path = $output_dir . '/PrintAll_' . $loc_slug . '.pdf';
         $print_all_pdf  = self::create_pdf( 0.75 );
 
@@ -44,40 +45,20 @@ class RME_EOC_PDF_Generator {
         self::add_facilitator_pages( $print_all_pdf, $assignments, $cfg, $contradictions, $cross_refs );
 
         // Student card pages
-        $student_pdfs = array();
         foreach ( $assignments as $i => $student_tasks ) {
             $num = $i + 1;
-
-            // Individual student PDF
-            $student_path = $output_dir . '/Student_' . sprintf( '%02d', $num ) . '.pdf';
-            $student_pdf  = self::create_pdf( 0.85 );
-            foreach ( $student_tasks as $idx => $task ) {
-                if ( $idx > 0 ) {
-                    $student_pdf->AddPage();
-                }
-                self::render_task_card( $student_pdf, $task, $num, $cfg );
-            }
-            $student_pdf->Output( $student_path, 'F' );
-            $student_pdfs[] = $student_path;
-
-            // Also add to print-all
             foreach ( $student_tasks as $task ) {
                 $print_all_pdf->AddPage();
+                $print_all_pdf->SetMargins( 0.85 * 25.4, 0.85 * 25.4, 0.85 * 25.4 );
                 self::render_task_card( $print_all_pdf, $task, $num, $cfg );
             }
         }
 
-        // Facilitator-only PDF
-        $fac_path = $output_dir . '/Facilitator_Reference.pdf';
-        $fac_pdf  = self::create_pdf( 0.75 );
-        self::add_facilitator_pages( $fac_pdf, $assignments, $cfg, $contradictions, $cross_refs );
-        $fac_pdf->Output( $fac_path, 'F' );
-
         $print_all_pdf->Output( $print_all_path, 'F' );
 
         return array(
-            'student_pdfs'    => $student_pdfs,
-            'facilitator_pdf' => $fac_path,
+            'student_pdfs'    => array(),
+            'facilitator_pdf' => $print_all_path,
             'print_all_pdf'   => $print_all_path,
             'output_dir'      => $output_dir,
         );
