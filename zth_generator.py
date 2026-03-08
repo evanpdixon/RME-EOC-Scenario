@@ -575,39 +575,18 @@ def distribute(class_size, tasks, seed=None):
     if seed is not None:
         random.seed(seed)
 
-    task_dict   = {t["letter"]: t for t in tasks}
     priority_t  = [t for t in tasks if t["priority"]]
     normal_t    = [t for t in tasks if not t["priority"]]
     total       = len(tasks)
-    assignments = [[] for _ in range(class_size)]
 
-    if class_size <= total:
-        max_normal = max(0, class_size - len(priority_t))
-        first_pass = priority_t + normal_t[:max_normal]
-        for i, task in enumerate(first_pass):
-            assignments[i].append(task)
-        for task in normal_t[max_normal:]:
-            best, best_count = None, 999
-            for student_tasks in assignments:
-                existing = [t["letter"] for t in student_tasks]
-                conflict = any(
-                    e in task["conflicts"] or
-                    task["letter"] in task_dict[e]["conflicts"]
-                    for e in existing
-                )
-                if not conflict and len(student_tasks) < best_count:
-                    best, best_count = student_tasks, len(student_tasks)
-            if best is not None:
-                best.append(task)
-    else:
-        all_tasks = priority_t + normal_t
-        for i, task in enumerate(all_tasks):
-            assignments[i].append(task)
-        pool, idx = all_tasks[:], 0
-        for si in range(total, class_size):
-            assignments[si].append(pool[idx % len(pool)])
-            idx += 1
+    # One unique task per student, up to the number of tasks available.
+    # Priority tasks assigned first, then normal tasks fill remaining slots.
+    # Extra students beyond the task count get no card (they staff the EOC).
+    num_field   = min(class_size, total)
+    max_normal  = max(0, num_field - len(priority_t))
+    all_assigned = priority_t + normal_t[:max_normal]
 
+    assignments = [[task] for task in all_assigned]
     return assignments
 
 

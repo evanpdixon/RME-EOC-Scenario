@@ -35,56 +35,17 @@ class RME_EOC_Distribution {
         }
 
         $total       = count( $tasks );
+        // Always assign exactly one unique task per student, up to the number of tasks available.
+        // Priority tasks are assigned first, then normal tasks fill remaining slots.
+        // Extra students beyond the task count get no card (they staff the EOC).
+        $num_field   = min( $class_size, $total );
         $assignments = array();
-        for ( $i = 0; $i < $class_size; $i++ ) {
-            $assignments[ $i ] = array();
-        }
 
-        if ( $class_size <= $total ) {
-            $max_normal = max( 0, $class_size - count( $priority_t ) );
-            $first_pass = array_merge( $priority_t, array_slice( $normal_t, 0, $max_normal ) );
+        $max_normal  = max( 0, $num_field - count( $priority_t ) );
+        $all_assigned = array_merge( $priority_t, array_slice( $normal_t, 0, $max_normal ) );
 
-            foreach ( $first_pass as $i => $task ) {
-                $assignments[ $i ][] = $task;
-            }
-
-            $leftover = array_slice( $normal_t, $max_normal );
-            foreach ( $leftover as $task ) {
-                $best       = null;
-                $best_count = 999;
-                foreach ( $assignments as &$student_tasks ) {
-                    $existing = array_map( function( $t ) { return $t['letter']; }, $student_tasks );
-                    $conflict = false;
-                    foreach ( $existing as $e ) {
-                        if (
-                            in_array( $e, $task['conflicts'], true ) ||
-                            in_array( $task['letter'], $task_dict[ $e ]['conflicts'], true )
-                        ) {
-                            $conflict = true;
-                            break;
-                        }
-                    }
-                    if ( ! $conflict && count( $student_tasks ) < $best_count ) {
-                        $best       = &$student_tasks;
-                        $best_count = count( $student_tasks );
-                    }
-                }
-                unset( $student_tasks );
-                if ( $best !== null ) {
-                    $best[] = $task;
-                }
-                unset( $best );
-            }
-        } else {
-            $all_tasks = array_merge( $priority_t, $normal_t );
-            foreach ( $all_tasks as $i => $task ) {
-                $assignments[ $i ][] = $task;
-            }
-            $idx = 0;
-            for ( $si = $total; $si < $class_size; $si++ ) {
-                $assignments[ $si ][] = $all_tasks[ $idx % count( $all_tasks ) ];
-                $idx++;
-            }
+        foreach ( $all_assigned as $task ) {
+            $assignments[] = array( $task );
         }
 
         return $assignments;
