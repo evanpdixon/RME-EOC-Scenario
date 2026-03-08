@@ -175,6 +175,11 @@ class RME_EOC_PDF_Generator {
             array_sum( array_map( 'count', $assignments ) )
         );
 
+        // EOC channel instructions
+        $html .= '<table cellpadding="5" style="width:100%;"><tr><td style="background-color:#1a5276;color:#FFFFFF;font-weight:bold;font-size:10px;text-align:center;">'
+            . 'EOC RADIO INSTRUCTIONS: Monitor and operate on GMRS Channels 15-22 only. Students have been instructed to use Channels 1-22.'
+            . '</td></tr></table><br/>';
+
         // Priority alert
         $html .= '<table cellpadding="5" style="width:100%;">
             <tr><td style="background-color:#FF0000;color:#FFFFFF;font-weight:bold;font-size:10px;text-align:center;">

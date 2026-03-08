@@ -197,7 +197,7 @@ def build_tasks(cfg):
             letter="A", phonetic="Alpha", priority=False,
             conflicts=["C", "D"],
             student_tasks=[
-                "Establish radio communications with the Emergency Operations Center (EOC).",
+                "Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.",
                 "Request the current weather forecast and any incoming severe weather warnings.",
             ],
             info=[
@@ -216,7 +216,7 @@ def build_tasks(cfg):
             letter="B", phonetic="Bravo", priority=False,
             conflicts=[],
             student_tasks=[
-                "Establish radio communications with the Emergency Operations Center (EOC).",
+                "Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.",
                 "Determine the nearest location where propane filling or exchange is available.",
                 "Obtain payment methods, possible driving routes from your location, and cost.",
                 "Your location is: %s." % v,
@@ -238,7 +238,7 @@ def build_tasks(cfg):
             letter="C", phonetic="Charlie", priority=False,
             conflicts=["A", "D"],
             student_tasks=[
-                "Establish radio communications with the Emergency Operations Center (EOC).",
+                "Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.",
                 "Determine the status of your elderly grandmother, %s, who lives at %s. She is 91 years old, lives alone, and you have not heard from her since the disaster." % (gn, ag),
                 "If no information is available, leave your contact information and check back regularly.",
             ],
@@ -258,7 +258,7 @@ def build_tasks(cfg):
             letter="D", phonetic="Delta", priority=False,
             conflicts=["A", "C"],
             student_tasks=[
-                "Establish radio communications with the Emergency Operations Center (EOC).",
+                "Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.",
                 "Determine the status of your uncle %s who lives at %s with his wife and daughters (ages 16, 13, and 10). You have not heard from them since the disaster." % (un, au),
                 "If no information is available, leave your contact information and check back regularly.",
             ],
@@ -278,7 +278,7 @@ def build_tasks(cfg):
             letter="E", phonetic="Echo", priority=False,
             conflicts=[],
             student_tasks=[
-                "Establish radio communications with the Emergency Operations Center (EOC).",
+                "Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.",
                 "Request the location of emergency shelters that accept pets. Obtain passable route information from your location.",
                 "You may be asked to use this information in a future scenario -- document it thoroughly.",
             ],
@@ -298,7 +298,7 @@ def build_tasks(cfg):
             letter="F", phonetic="Foxtrot", priority=False,
             conflicts=["J"],
             student_tasks=[
-                "Establish radio communications with the Emergency Operations Center (EOC).",
+                "Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.",
                 "Request programming information for the 3 nearest amateur radio repeaters in your area.",
                 "You may be asked to use this information in a future scenario -- document it accurately so you can program them.",
             ],
@@ -318,7 +318,7 @@ def build_tasks(cfg):
             letter="G", phonetic="Golf", priority=False,
             conflicts=[],
             student_tasks=[
-                "Establish radio communications with the Emergency Operations Center (EOC).",
+                "Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.",
                 "Request the nearest location with livestock feed available. Determine feed types, payment methods, and passable routes.",
                 "Your location is: %s." % v,
                 "You may be asked to use this information in a future scenario -- document it accurately.",
@@ -339,7 +339,7 @@ def build_tasks(cfg):
             letter="H", phonetic="Hotel", priority=False,
             conflicts=[],
             student_tasks=[
-                "Establish radio communications with the Emergency Operations Center (EOC).",
+                "Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.",
                 "Pass a message to your employer outside the disaster zone -- you are safe but unable to come to work due to hazardous conditions. Include something beyond your name to identify yourself. Request confirmation the message was received.",
                 "This message will actually be passed -- please use real information. You may use the Radio Made Easy phone number from your homework if you prefer.",
             ],
@@ -359,7 +359,7 @@ def build_tasks(cfg):
             letter="I", phonetic="India", priority=False,
             conflicts=[],
             student_tasks=[
-                "Establish radio communications with the Emergency Operations Center (EOC).",
+                "Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.",
                 "Pass a message to a loved one outside the disaster zone informing them of your location and status. Request confirmation from the EOC that the message was delivered.",
                 "Ask the EOC to provide some form of authentication from your loved one (a safe word, inside joke, etc.) so you know the message reached the right person.",
                 "This message will actually be passed -- use real information. The EOC will clearly identify this as a training exercise.",
@@ -380,7 +380,7 @@ def build_tasks(cfg):
             letter="J", phonetic="Juliet", priority=False,
             conflicts=["F", "K"],
             student_tasks=[
-                "Establish radio communications with the Emergency Operations Center (EOC).",
+                "Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.",
                 "Request the location of the nearest pharmacies with antibiotic availability. Confirm operating hours, payment methods, and passable driving routes.",
                 "You specifically need antibiotics for a child's ear infection.",
                 "Your location is: %s." % v,
@@ -402,7 +402,7 @@ def build_tasks(cfg):
             letter="K", phonetic="Kilo", priority=False,
             conflicts=["J"],
             student_tasks=[
-                "Establish radio communications with the Emergency Operations Center (EOC).",
+                "Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.",
                 "Report downed power lines and outages on your road.",
             ],
             info=[
@@ -421,7 +421,7 @@ def build_tasks(cfg):
             letter="L", phonetic="Lima", priority=False,
             conflicts=[],
             student_tasks=[
-                "Establish radio communications with the Emergency Operations Center (EOC).",
+                "Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.",
                 "Report severe flooding and an impassable road.",
                 "Your location: %s at the creek crossing near %s -- water is completely over the road." % (fr, m),
             ],
@@ -441,7 +441,7 @@ def build_tasks(cfg):
             letter="M", phonetic="Mike", priority=False,
             conflicts=[],
             student_tasks=[
-                "Establish radio communications with the Emergency Operations Center (EOC).",
+                "Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.",
                 "Request information on water distribution locations and water purification methods using common household resources.",
                 "Your location is: %s." % v,
                 "You may be asked to use this information in a future scenario -- document it accurately.",
@@ -462,7 +462,7 @@ def build_tasks(cfg):
             letter="N", phonetic="November", priority=True,
             conflicts=[],
             student_tasks=[
-                "Establish radio communications with the Emergency Operations Center (EOC).",
+                "Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.",
                 "Your father (68) has been experiencing chest pain and left arm numbness for approximately 45 minutes. He is conscious but pale and sweating. You need the fastest passable route to the nearest hospital.",
                 "You cannot wait for an ambulance -- you must drive him. Ask the EOC to confirm route conditions and identify any obstructions.",
             ],
@@ -482,7 +482,7 @@ def build_tasks(cfg):
             letter="O", phonetic="Oscar", priority=False,
             conflicts=[],
             student_tasks=[
-                "Establish radio communications with the Emergency Operations Center (EOC).",
+                "Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.",
                 "Request information on safe waste disposal methods -- the sewer system in your area is no longer functioning.",
             ],
             info=[
@@ -501,7 +501,7 @@ def build_tasks(cfg):
             letter="P", phonetic="Papa", priority=False,
             conflicts=[],
             student_tasks=[
-                "Establish radio communications with the Emergency Operations Center (EOC).",
+                "Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.",
                 "Request information on gasoline availability -- location, operating hours, price, payment methods, and route from your location.",
                 "Your location is: %s." % v,
                 "You may be asked to use this information in a future scenario -- document it accurately.",
