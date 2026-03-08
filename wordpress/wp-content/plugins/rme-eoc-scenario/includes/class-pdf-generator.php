@@ -205,14 +205,35 @@ class RME_EOC_PDF_Generator {
             $html .= sprintf( '<p style="font-size:9px;"><b>%s</b> -- %s</p>', esc_html( $cr['ref'] ), esc_html( $cr['desc'] ) );
         }
 
+        // Task keyword quick-reference
+        $task_keywords = array(
+            'A' => 'Weather/Neighbor Status',
+            'B' => 'Propane',
+            'C' => 'Grandmother Welfare',
+            'D' => 'Uncle Welfare',
+            'E' => 'Pet Shelter',
+            'F' => 'Repeaters',
+            'G' => 'Livestock Feed',
+            'H' => 'Employer Message',
+            'I' => 'Loved One Message',
+            'J' => 'Child Antibiotics',
+            'K' => 'Downed Power Lines',
+            'L' => 'Flood Report',
+            'M' => 'Water/Purification',
+            'N' => 'MEDICAL EMERGENCY',
+            'O' => 'Waste Disposal',
+            'P' => 'Gasoline',
+        );
+
         // Assignment table
         $html .= '<h2 style="font-size:13px;">Student Assignments</h2>';
         $html .= '<table border="0.5" cellpadding="3" style="font-size:7.5px;">
             <tr style="background-color:#222222;color:#FFFFFF;font-weight:bold;">
                 <td width="5%">#</td>
                 <td width="8%">Code</td>
-                <td width="30%">Task(s)</td>
-                <td width="57%">Notes</td>
+                <td width="20%">Task(s)</td>
+                <td width="17%">Topic</td>
+                <td width="50%">Notes</td>
             </tr>';
 
         foreach ( $assignments as $i => $student_tasks ) {
@@ -225,6 +246,10 @@ class RME_EOC_PDF_Generator {
                 return sprintf( '%s (%s)%s', $t['letter'], $t['phonetic'], $flag );
             }, $student_tasks ) );
 
+            $topics = implode( ', ', array_map( function( $t ) use ( $task_keywords ) {
+                return isset( $task_keywords[ $t['letter'] ] ) ? $task_keywords[ $t['letter'] ] : $t['letter'];
+            }, $student_tasks ) );
+
             $notes = implode( ' | ', array_filter( array_map( function( $t ) {
                 return $t['fac_notes'];
             }, $student_tasks ) ) );
@@ -233,10 +258,11 @@ class RME_EOC_PDF_Generator {
                 '<tr style="background-color:%s;">
                     <td width="5%%">%d</td>
                     <td width="8%%">%s</td>
-                    <td width="30%%">%s</td>
-                    <td width="57%%" style="font-size:6.5px;font-style:italic;color:#555555;">%s</td>
+                    <td width="20%%">%s</td>
+                    <td width="17%%" style="font-weight:bold;">%s</td>
+                    <td width="50%%" style="font-size:6.5px;font-style:italic;color:#555555;">%s</td>
                 </tr>',
-                $bg, $num, $code, esc_html( $task_str ), esc_html( $notes )
+                $bg, $num, $code, esc_html( $task_str ), esc_html( $topics ), esc_html( $notes )
             );
         }
         $html .= '</table>';
