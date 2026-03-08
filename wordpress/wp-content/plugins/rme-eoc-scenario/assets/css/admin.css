@@ -1,0 +1,51 @@
+.rme-eoc-wrap {
+    max-width: 900px;
+}
+
+.rme-eoc-section {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin-top: 16px;
+}
+
+.rme-eoc-section h2 {
+    margin-top: 0;
+    padding-top: 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.rme-eoc-section h3 {
+    margin-top: 24px;
+    color: #1d2327;
+}
+
+.rme-road-select,
+.rme-poi-select {
+    width: 300px;
+    margin-bottom: 4px;
+    display: block;
+}
+
+#rme-download-links {
+    margin-top: 16px;
+}
+
+#rme-download-links h3 {
+    margin-top: 20px;
+}
+
+#rme-download-links .rme-download-item {
+    display: inline-block;
+    margin: 4px 8px 4px 0;
+}
+
+#rme-download-links .rme-download-item a {
+    text-decoration: none;
+}
+
+.rme-eoc-section .spinner.is-active {
+    visibility: visible;
+}

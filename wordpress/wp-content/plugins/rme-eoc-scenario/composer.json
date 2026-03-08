@@ -1,0 +1,7 @@
+{
+    "name": "rme/eoc-scenario",
+    "description": "RME EOC Scenario Generator for WordPress",
+    "require": {
+        "tecnickcom/tcpdf": "^6.11"
+    }
+}

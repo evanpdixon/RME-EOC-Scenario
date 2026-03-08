@@ -10,3 +10,7 @@ __pycache__/
 *.pyo
 .venv/
 venv/
+
+# WordPress / Docker
+wordpress/wp-content/plugins/rme-eoc-scenario/vendor/
+wordpress/wp-content/plugins/rme-eoc-scenario/composer.lock
