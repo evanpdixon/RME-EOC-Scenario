@@ -76,51 +76,92 @@ class RME_EOC_Location_Lookup {
             return $cached;
         }
 
-        // Use different radii: hospitals wider (rural areas), roads narrower
-        $poi_radius  = $radius_m;
         $road_radius = min( $radius_m, 5000 );
-        $hwy_radius  = $radius_m;
+        // Cap fuel/pharmacy radius to avoid massive queries
+        $local_radius = min( $radius_m, 16000 );
 
-        $query = sprintf(
-            '[out:json][timeout:30];
+        // Query 1: POIs (use node for speed — buildings as ways are slow)
+        $poi_query = sprintf(
+            '[out:json][timeout:60];
             (
-              nwr["amenity"="hospital"]["name"](around:%d,%f,%f);
-              nwr["amenity"="fuel"]["name"](around:%d,%f,%f);
-              nwr["amenity"="pharmacy"]["name"](around:%d,%f,%f);
-              nwr["shop"~"farm|hardware|agrarian|doityourself"]["name"](around:%d,%f,%f);
+              node["amenity"="hospital"]["name"](around:%d,%f,%f);
+              way["amenity"="hospital"]["name"](around:%d,%f,%f);
+              node["amenity"="fuel"]["name"](around:%d,%f,%f);
+              node["amenity"="pharmacy"]["name"](around:%d,%f,%f);
+              node["shop"~"farm|hardware|agrarian|doityourself"]["name"](around:%d,%f,%f);
+            );
+            out center;',
+            $radius_m, $lat, $lon,      // hospitals — full radius
+            $radius_m, $lat, $lon,      // hospitals (ways) — full radius
+            $local_radius, $lat, $lon,  // fuel — capped
+            $local_radius, $lat, $lon,  // pharmacy — capped
+            $radius_m, $lat, $lon       // farm/hardware — full radius
+        );
+
+        // Query 2: Roads (separate to avoid timeout)
+        $road_query = sprintf(
+            '[out:json][timeout:60];
+            (
               way["highway"~"residential|tertiary"]["name"](around:%d,%f,%f);
               way["highway"~"primary|secondary"]["name"](around:%d,%f,%f);
-              way["highway"~"trunk|motorway"]["ref"](around:%d,%f,%f);
+              way["highway"~"trunk|motorway"](around:%d,%f,%f);
             );
-            out body;',
-            $poi_radius, $lat, $lon,   // hospitals
-            $poi_radius, $lat, $lon,   // fuel
-            $poi_radius, $lat, $lon,   // pharmacy
-            $poi_radius, $lat, $lon,   // farm/hardware
-            $road_radius, $lat, $lon,  // residential roads
-            $poi_radius, $lat, $lon,   // primary roads
-            $hwy_radius, $lat, $lon    // highways
+            out tags;',
+            $road_radius, $lat, $lon,   // residential — tight radius
+            $radius_m, $lat, $lon,      // primary/secondary — full radius
+            $radius_m, $lat, $lon       // highways — full radius
         );
 
-        $response = wp_remote_post(
+        $all_elements = array();
+
+        // Run POI query
+        $poi_response = wp_remote_post(
             self::$overpass_url,
             array(
-                'timeout'    => 45,
+                'timeout'    => 90,
                 'user-agent' => self::$user_agent,
-                'body'       => array( 'data' => $query ),
+                'body'       => array( 'data' => $poi_query ),
             )
         );
-
-        if ( is_wp_error( $response ) ) {
-            return $response;
+        if ( ! is_wp_error( $poi_response ) ) {
+            $poi_body = json_decode( wp_remote_retrieve_body( $poi_response ), true );
+            if ( ! empty( $poi_body['elements'] ) ) {
+                $all_elements = array_merge( $all_elements, $poi_body['elements'] );
+            }
         }
 
-        $body = json_decode( wp_remote_retrieve_body( $response ), true );
-        if ( empty( $body['elements'] ) ) {
-            return new WP_Error( 'overpass_empty', 'No results from Overpass API. Try increasing the search radius.' );
+        // Run road query
+        $road_response = wp_remote_post(
+            self::$overpass_url,
+            array(
+                'timeout'    => 90,
+                'user-agent' => self::$user_agent,
+                'body'       => array( 'data' => $road_query ),
+            )
+        );
+        if ( ! is_wp_error( $road_response ) ) {
+            $road_body = json_decode( wp_remote_retrieve_body( $road_response ), true );
+            if ( ! empty( $road_body['elements'] ) ) {
+                $all_elements = array_merge( $all_elements, $road_body['elements'] );
+            }
         }
 
-        $result = self::parse_overpass_results( $body['elements'] );
+        if ( empty( $all_elements ) ) {
+            // Return specific error about which query failed
+            $errors = array();
+            if ( is_wp_error( $poi_response ) ) {
+                $errors[] = 'POI query: ' . $poi_response->get_error_message();
+            }
+            if ( is_wp_error( $road_response ) ) {
+                $errors[] = 'Road query: ' . $road_response->get_error_message();
+            }
+            if ( empty( $errors ) ) {
+                $errors[] = 'Both queries returned empty results. The area may have limited OpenStreetMap coverage.';
+            }
+            return new WP_Error( 'overpass_empty', implode( ' | ', $errors ) );
+        }
+
+        $result = self::parse_overpass_results( $all_elements );
         set_transient( $cache_key, $result, HOUR_IN_SECONDS );
         return $result;
     }
