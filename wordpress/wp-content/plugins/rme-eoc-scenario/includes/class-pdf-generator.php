@@ -44,11 +44,6 @@ class RME_EOC_PDF_Generator {
         // Facilitator reference pages
         self::add_facilitator_pages( $print_all_pdf, $assignments, $cfg, $contradictions, $cross_refs );
 
-        // Task list — filled reference
-        $print_all_pdf->AddPage();
-        $print_all_pdf->SetMargins( 0.85 * 25.4, 0.85 * 25.4, 0.85 * 25.4 );
-        self::render_task_list_filled( $print_all_pdf, $tasks );
-
         // Task list — blank for EOC to fill in
         $print_all_pdf->AddPage();
         $print_all_pdf->SetMargins( 0.85 * 25.4, 0.85 * 25.4, 0.85 * 25.4 );
@@ -214,55 +209,7 @@ class RME_EOC_PDF_Generator {
         $pdf->writeHTML( $html, true, false, true, false, '' );
     }
 
-    /**
-     * Render the filled-in task list reference page (matches original PDF page 3).
-     */
-    private static function render_task_list_filled( $pdf, $tasks ) {
-        $logo_path = RME_EOC_PATH . 'assets/images/logo.png';
-        if ( file_exists( $logo_path ) ) {
-            $page_w   = $pdf->getPageWidth();
-            $margin_r = $pdf->getMargins()['right'];
-            $logo_w   = 20;
-            $x = $page_w - $margin_r - $logo_w;
-            $y = $pdf->getMargins()['top'];
-            $pdf->Image( $logo_path, $x, $y, $logo_w, 0, '', '', '', false, 300, '', false, false, 0, '', false, false );
-        }
 
-        $task_keywords = array(
-            'A' => 'Weather / Neighbors',
-            'B' => 'Propane',
-            'C' => 'Grandmother',
-            'D' => 'Uncle &amp; Family',
-            'E' => 'Pet Shelter / Livestock Feed',
-            'F' => 'Repeaters / Pharmacy',
-            'G' => 'Livestock Feed / Gas',
-            'H' => 'Employer / Propane',
-            'I' => 'Loved One',
-            'J' => 'Pharmacy',
-            'K' => 'Power Lines',
-            'L' => 'Flooding / Water Distribution',
-            'M' => 'Water / Hot Meals',
-            'N' => 'MEDICAL EMERGENCY',
-            'O' => 'Waste Disposal / Repeaters',
-            'P' => 'Gasoline',
-        );
-
-        $html = '<h2 style="font-size:18px;text-decoration:underline;">Task List</h2><br/>';
-        $html .= '<table cellpadding="4" style="width:100%;"><tr>';
-        $html .= '<td width="50%">';
-        foreach ( range( 'A', 'H' ) as $letter ) {
-            $kw = isset( $task_keywords[ $letter ] ) ? $task_keywords[ $letter ] : '';
-            $html .= sprintf( '<p style="font-size:14px;"><b>%s</b> &nbsp; %s</p>', $letter, $kw );
-        }
-        $html .= '</td><td width="50%">';
-        foreach ( range( 'I', 'P' ) as $letter ) {
-            $kw = isset( $task_keywords[ $letter ] ) ? $task_keywords[ $letter ] : '';
-            $html .= sprintf( '<p style="font-size:14px;"><b>%s</b> &nbsp; %s</p>', $letter, $kw );
-        }
-        $html .= '</td></tr></table>';
-
-        $pdf->writeHTML( $html, true, false, true, false, '' );
-    }
 
     /**
      * Render the blank task list page for EOC to fill in (matches original PDF page 4).
