@@ -96,11 +96,15 @@ class RME_EOC_PDF_Generator {
      * Render a single task card onto the PDF.
      */
     private static function render_task_card( $pdf, $task, $student_num, $cfg ) {
-        // Logo at top
+        // Logo — top-right corner, small letterhead style
         $logo_path = RME_EOC_PATH . 'assets/images/logo.png';
         if ( file_exists( $logo_path ) ) {
-            $pdf->Image( $logo_path, '', '', 40, 0, '', '', 'T', false, 300, 'C' );
-            $pdf->Ln( 4 );
+            $page_w  = $pdf->getPageWidth();
+            $margin_r = $pdf->getMargins()['right'];
+            $logo_w  = 20; // mm
+            $x = $page_w - $margin_r - $logo_w;
+            $y = $pdf->getMargins()['top'];
+            $pdf->Image( $logo_path, $x, $y, $logo_w, 0, '', '', '', false, 300, '', false, false, 0, '', false, false );
         }
 
         $html = '';
