@@ -26,31 +26,31 @@ from pypdf import PdfWriter, PdfReader
 BLANK = "_______________"
 
 # ----------------------------------------------------------------
-#  DEFAULT CONFIG  (Jackson, Ohio reference class)
+#  DEFAULT CONFIG  (Stony Point, NC -- RME Headquarters)
 # ----------------------------------------------------------------
 DEFAULTS = dict(
     class_size    = 20,
-    location      = "Jackson, Ohio",
-    venue         = "86 Tick Ridge Rd, Jackson, OH",
+    location      = "Stony Point, North Carolina",
+    venue         = "8784 NC Highway 90 E, Stony Point, NC 28678",
     output_dir    = ".",
 
-    main_road     = "Pattonsville Rd",
-    flooded_road  = "Goose Run Rd",
-    blocked_road  = "E Broadway St",
-    highway       = "US-35",
-    main_st       = "E Main St",
+    main_road     = "NC-90",
+    flooded_road  = "Rocky Creek Rd",
+    blocked_road  = "Wilkesboro Hwy",
+    highway       = "I-77",
+    main_st       = "NC-90",
 
-    addr_a        = "2847",
-    addr_grandma  = "2849",
-    addr_uncle    = "2845",
-    addr_neighbor = "2851",
+    addr_a        = "8780",
+    addr_grandma  = "8776",
+    addr_uncle    = "8788",
+    addr_neighbor = "8774",
 
-    grandma_name  = "Hazel Pitman",
-    uncle_name    = "John",
+    grandma_name  = "Betty Childers",
+    uncle_name    = "Ray",
 
-    hospital      = "Jackson Area Medical Center / Holzer Jackson",
-    gas_station   = "Marathon station on E Main St",
-    local_store   = "Tractor Supply on E Main St",
+    hospital      = "Iredell Memorial Hospital, 557 Brookdale Dr, Statesville NC",
+    gas_station   = "BP station on NC-90",
+    local_store   = "Tractor Supply on US-21 in Statesville",
 )
 
 
@@ -70,7 +70,7 @@ def get_config():
     print("  Select mode:")
     print("    1  Interactive   -- enter location details now")
     print("    2  Fill-in-blank -- print blanks, hand-fill later")
-    print("    3  Defaults      -- Jackson, Ohio (fast re-run)")
+    print("    3  Defaults      -- Stony Point, NC HQ (fast re-run)")
     print()
 
     while True:

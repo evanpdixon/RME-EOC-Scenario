@@ -15,7 +15,7 @@
                         <option value="henderson_tx">Henderson, Texas</option>
                         <option value="stoneboro_pa">Stoneboro, Pennsylvania</option>
                         <option value="spiro_ok">Spiro, Oklahoma</option>
-                        <option value="jackson_oh">Jackson, Ohio (Default)</option>
+                        <option value="stony_point_nc">Stony Point, NC (HQ Default)</option>
                     </select>
                 </td>
             </tr>

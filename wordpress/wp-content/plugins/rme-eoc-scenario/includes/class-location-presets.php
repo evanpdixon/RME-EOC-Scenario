@@ -15,7 +15,7 @@ class RME_EOC_Location_Presets {
             'henderson_tx'  => self::henderson_tx(),
             'stoneboro_pa'  => self::stoneboro_pa(),
             'spiro_ok'      => self::spiro_ok(),
-            'jackson_oh'    => self::jackson_oh(),
+            'stony_point_nc' => self::stony_point_nc(),
         );
     }
 
@@ -85,25 +85,25 @@ class RME_EOC_Location_Presets {
         );
     }
 
-    public static function jackson_oh() {
+    public static function stony_point_nc() {
         return array(
-            'label'         => 'Jackson, Ohio (Default)',
-            'location'      => 'Jackson, Ohio',
-            'venue'         => '86 Tick Ridge Rd, Jackson, OH',
-            'main_road'     => 'Pattonsville Rd',
-            'flooded_road'  => 'Goose Run Rd',
-            'blocked_road'  => 'E Broadway St',
-            'highway'       => 'US-35',
-            'main_st'       => 'E Main St',
-            'addr_a'        => '2847',
-            'addr_grandma'  => '2849',
-            'addr_uncle'    => '2845',
-            'addr_neighbor' => '2851',
-            'grandma_name'  => 'Hazel Pitman',
-            'uncle_name'    => 'John',
-            'hospital'      => 'Jackson Area Medical Center / Holzer Jackson',
-            'gas_station'   => 'Marathon station on E Main St',
-            'local_store'   => 'Tractor Supply on E Main St',
+            'label'         => 'Stony Point, North Carolina (HQ)',
+            'location'      => 'Stony Point, North Carolina',
+            'venue'         => '8784 NC Highway 90 E, Stony Point, NC 28678',
+            'main_road'     => 'NC-90',
+            'flooded_road'  => 'Rocky Creek Rd',
+            'blocked_road'  => 'Wilkesboro Hwy',
+            'highway'       => 'I-77',
+            'main_st'       => 'NC-90',
+            'addr_a'        => '8780',
+            'addr_grandma'  => '8776',
+            'addr_uncle'    => '8788',
+            'addr_neighbor' => '8774',
+            'grandma_name'  => 'Betty Childers',
+            'uncle_name'    => 'Ray',
+            'hospital'      => 'Iredell Memorial Hospital, 557 Brookdale Dr, Statesville NC',
+            'gas_station'   => 'BP station on NC-90',
+            'local_store'   => 'Tractor Supply on US-21 in Statesville',
         );
     }
 }
