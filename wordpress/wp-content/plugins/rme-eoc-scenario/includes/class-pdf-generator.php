@@ -8,6 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+// Load TCPDF autoloader early so the subclass declaration succeeds.
+$_rme_eoc_autoload = dirname( __DIR__ ) . '/vendor/autoload.php';
+if ( file_exists( $_rme_eoc_autoload ) ) {
+    require_once $_rme_eoc_autoload;
+}
+
 class RME_EOC_PDF_Generator {
 
     private static $copyright = "\xC2\xA9 Radio Made Easy. Proprietary training material. Unauthorized reproduction, distribution, or use outside of licensed Radio Made Easy courses is strictly prohibited.";
@@ -78,10 +84,7 @@ class RME_EOC_PDF_Generator {
     }
 
     private static function load_tcpdf() {
-        $autoload = RME_EOC_PATH . 'vendor/autoload.php';
-        if ( file_exists( $autoload ) ) {
-            require_once $autoload;
-        }
+        // Already loaded at file level for class declaration.
     }
 
     private static function get_output_dir() {
