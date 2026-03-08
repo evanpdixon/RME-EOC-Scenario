@@ -44,6 +44,21 @@ class RME_EOC_PDF_Generator {
         // Facilitator reference pages
         self::add_facilitator_pages( $print_all_pdf, $assignments, $cfg, $contradictions, $cross_refs );
 
+        // Task list — filled reference
+        $print_all_pdf->AddPage();
+        $print_all_pdf->SetMargins( 0.85 * 25.4, 0.85 * 25.4, 0.85 * 25.4 );
+        self::render_task_list_filled( $print_all_pdf, $tasks );
+
+        // Task list — blank for EOC to fill in
+        $print_all_pdf->AddPage();
+        $print_all_pdf->SetMargins( 0.85 * 25.4, 0.85 * 25.4, 0.85 * 25.4 );
+        self::render_task_list_blank( $print_all_pdf );
+
+        // EOC instruction page
+        $print_all_pdf->AddPage();
+        $print_all_pdf->SetMargins( 0.85 * 25.4, 0.85 * 25.4, 0.85 * 25.4 );
+        self::render_eoc_instructions( $print_all_pdf, $cfg );
+
         // Student card pages
         foreach ( $assignments as $i => $student_tasks ) {
             $num = $i + 1;
@@ -159,6 +174,121 @@ class RME_EOC_PDF_Generator {
             '<br/><p style="text-align:right;font-size:7px;color:#CCCCCC;">[S-%02d]</p>',
             $student_num
         );
+
+        $pdf->writeHTML( $html, true, false, true, false, '' );
+    }
+
+    /**
+     * Render the standalone EOC instruction sheet (matches original PDF page 5).
+     */
+    private static function render_eoc_instructions( $pdf, $cfg ) {
+        // Logo
+        $logo_path = RME_EOC_PATH . 'assets/images/logo.png';
+        if ( file_exists( $logo_path ) ) {
+            $page_w   = $pdf->getPageWidth();
+            $margin_r = $pdf->getMargins()['right'];
+            $logo_w   = 20;
+            $x = $page_w - $margin_r - $logo_w;
+            $y = $pdf->getMargins()['top'];
+            $pdf->Image( $logo_path, $x, $y, $logo_w, 0, '', '', '', false, 300, '', false, false, 0, '', false, false );
+        }
+
+        $html  = '<h1 style="font-size:24px;">Emergency<br/>Operations<br/>Center</h1>';
+        $html .= sprintf(
+            '<p style="font-size:11px;color:#888888;">%s</p>',
+            esc_html( $cfg['location'] )
+        );
+
+        $html .= '<p style="font-size:11px;">There has been a natural disaster in a nearby area. Utilities, phone, and internet are down for anyone inside the disaster zone. You are outside the disaster zone with cell phone and internet access. You must stay within this room and assist the survivors via radio communication.</p>';
+
+        $html .= '<ul>';
+        $html .= '<li style="font-size:11px;">Establish communications with the disaster survivors via radio.</li>';
+        $html .= '<li style="font-size:11px;">Establish an Emergency Communications Net on a single simplex frequency, anywhere between GMRS Channel 15 to 22.</li>';
+        $html .= '<li style="font-size:11px;">Appoint a team member to serve as Net Control who will organize and prioritize the traffic.</li>';
+        $html .= '<li style="font-size:11px;">If available, appoint team member(s) to assist with documentation, research, and any other necessary tasks. Be sure to keep a thorough written log of all communications.</li>';
+        $html .= '<li style="font-size:11px;">Use all of your available resources to assist the survivors to complete their tasks. Use the Net to request &quot;boots on the ground&quot; information from survivors, when applicable. Information found online may not be accurate during a disaster. Call to confirm businesses are open, for example.</li>';
+        $html .= '<li style="font-size:11px;">Treat all tasks as if they are real (EX: If asked to pass a message, actually pass the message).</li>';
+        $html .= '<li style="font-size:11px;">When applicable, be sure to inform anyone outside of the scenario this is a training exercise.</li>';
+        $html .= '</ul>';
+
+        $pdf->writeHTML( $html, true, false, true, false, '' );
+    }
+
+    /**
+     * Render the filled-in task list reference page (matches original PDF page 3).
+     */
+    private static function render_task_list_filled( $pdf, $tasks ) {
+        $logo_path = RME_EOC_PATH . 'assets/images/logo.png';
+        if ( file_exists( $logo_path ) ) {
+            $page_w   = $pdf->getPageWidth();
+            $margin_r = $pdf->getMargins()['right'];
+            $logo_w   = 20;
+            $x = $page_w - $margin_r - $logo_w;
+            $y = $pdf->getMargins()['top'];
+            $pdf->Image( $logo_path, $x, $y, $logo_w, 0, '', '', '', false, 300, '', false, false, 0, '', false, false );
+        }
+
+        $task_keywords = array(
+            'A' => 'Weather / Neighbors',
+            'B' => 'Propane',
+            'C' => 'Grandmother',
+            'D' => 'Uncle &amp; Family',
+            'E' => 'Pet Shelter / Livestock Feed',
+            'F' => 'Repeaters / Pharmacy',
+            'G' => 'Livestock Feed / Gas',
+            'H' => 'Employer / Propane',
+            'I' => 'Loved One',
+            'J' => 'Pharmacy',
+            'K' => 'Power Lines',
+            'L' => 'Flooding / Water Distribution',
+            'M' => 'Water / Hot Meals',
+            'N' => 'MEDICAL EMERGENCY',
+            'O' => 'Waste Disposal / Repeaters',
+            'P' => 'Gasoline',
+        );
+
+        $html = '<h2 style="font-size:18px;text-decoration:underline;">Task List</h2><br/>';
+        $html .= '<table cellpadding="4" style="width:100%;"><tr>';
+        $html .= '<td width="50%">';
+        foreach ( range( 'A', 'H' ) as $letter ) {
+            $kw = isset( $task_keywords[ $letter ] ) ? $task_keywords[ $letter ] : '';
+            $html .= sprintf( '<p style="font-size:14px;"><b>%s</b> &nbsp; %s</p>', $letter, $kw );
+        }
+        $html .= '</td><td width="50%">';
+        foreach ( range( 'I', 'P' ) as $letter ) {
+            $kw = isset( $task_keywords[ $letter ] ) ? $task_keywords[ $letter ] : '';
+            $html .= sprintf( '<p style="font-size:14px;"><b>%s</b> &nbsp; %s</p>', $letter, $kw );
+        }
+        $html .= '</td></tr></table>';
+
+        $pdf->writeHTML( $html, true, false, true, false, '' );
+    }
+
+    /**
+     * Render the blank task list page for EOC to fill in (matches original PDF page 4).
+     */
+    private static function render_task_list_blank( $pdf ) {
+        $logo_path = RME_EOC_PATH . 'assets/images/logo.png';
+        if ( file_exists( $logo_path ) ) {
+            $page_w   = $pdf->getPageWidth();
+            $margin_r = $pdf->getMargins()['right'];
+            $logo_w   = 20;
+            $x = $page_w - $margin_r - $logo_w;
+            $y = $pdf->getMargins()['top'];
+            $pdf->Image( $logo_path, $x, $y, $logo_w, 0, '', '', '', false, 300, '', false, false, 0, '', false, false );
+        }
+
+        $html = '<h2 style="font-size:18px;text-decoration:underline;">Task List</h2><br/>';
+        $html .= '<table cellpadding="4" style="width:100%;"><tr>';
+        $html .= '<td width="50%">';
+        foreach ( range( 'A', 'H' ) as $letter ) {
+            $html .= sprintf( '<p style="font-size:14px;"><b>%s</b> &nbsp; ______________________________</p>', $letter );
+        }
+        $html .= '</td><td width="50%">';
+        foreach ( range( 'I', 'P' ) as $letter ) {
+            $html .= sprintf( '<p style="font-size:14px;"><b>%s</b> &nbsp; ______________________________</p>', $letter );
+        }
+        $html .= '</td></tr></table>';
 
         $pdf->writeHTML( $html, true, false, true, false, '' );
     }
