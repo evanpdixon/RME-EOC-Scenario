@@ -49,12 +49,14 @@
             </tr>
         </table>
 
-        <p>
-            <button id="rme-lookup-btn" class="button button-primary">Look Up Location</button>
-            <button id="rme-skip-lookup-btn" class="button">Skip Lookup (Manual Entry)</button>
-            <span id="rme-lookup-spinner" class="spinner" style="float:none;"></span>
-        </p>
-        <div id="rme-lookup-error" class="notice notice-error" style="display:none;"><p></p></div>
+        <div id="rme-lookup-controls">
+            <p>
+                <button id="rme-lookup-btn" class="button button-primary">Look Up Location</button>
+                <button id="rme-skip-lookup-btn" class="button">Skip Lookup (Manual Entry)</button>
+                <span id="rme-lookup-spinner" class="spinner" style="float:none;"></span>
+            </p>
+            <div id="rme-lookup-error" class="notice notice-error" style="display:none;"><p></p></div>
+        </div>
     </div>
 
     <div id="rme-eoc-step-2" class="rme-eoc-section" style="display:none;">

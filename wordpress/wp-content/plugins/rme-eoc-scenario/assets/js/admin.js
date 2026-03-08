@@ -37,11 +37,11 @@
             }
         });
 
-        // Preset has all data — hide lookup buttons and go straight to Step 2
-        $('#rme-lookup-btn, #rme-skip-lookup-btn, #rme-radius').closest('tr').hide();
-        $('#rme-lookup-btn, #rme-skip-lookup-btn').hide();
+        // Preset has all data — hide lookup controls and go straight to Step 2
+        $('#rme-lookup-controls').hide();
+        $('#rme-radius').closest('tr').hide();
         $('#rme-preset-notice').remove();
-        $('#rme-lookup-btn').parent().before(
+        $('#rme-lookup-controls').before(
             '<p id="rme-preset-notice" class="notice notice-success" style="padding:8px 12px;">' +
             'Preset loaded: <strong>' + preset.label + '</strong> — all fields pre-filled. Review below and click Generate.' +
             '</p>'
@@ -106,8 +106,8 @@
     // Back button — restore lookup UI
     $('#rme-back-btn').on('click', function() {
         $('#rme-eoc-step-2').hide();
-        $('#rme-lookup-btn, #rme-skip-lookup-btn').show();
-        $('#rme-lookup-btn, #rme-skip-lookup-btn, #rme-radius').closest('tr').show();
+        $('#rme-lookup-controls').show();
+        $('#rme-radius').closest('tr').show();
         $('#rme-preset-notice').remove();
     });
 
