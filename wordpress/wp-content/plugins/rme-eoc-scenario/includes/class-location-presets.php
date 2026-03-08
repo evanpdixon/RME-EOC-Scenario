@@ -16,6 +16,7 @@ class RME_EOC_Location_Presets {
             'stoneboro_pa'  => self::stoneboro_pa(),
             'spiro_ok'      => self::spiro_ok(),
             'stony_point_nc' => self::stony_point_nc(),
+            'jackson_oh'    => self::jackson_oh(),
         );
     }
 
@@ -33,8 +34,8 @@ class RME_EOC_Location_Presets {
             'addr_grandma'  => '416',
             'addr_uncle'    => '408',
             'addr_neighbor' => '418',
-            'grandma_name'  => 'Ruth Blevins',
-            'uncle_name'    => 'Dale',
+            'grandma_name'  => 'Hazel Pittman',
+            'uncle_name'    => 'John',
             'hospital'      => 'UT Health Henderson, 300 Wilson St',
             'gas_station'   => 'Murphy USA on US-79 S',
             'local_store'   => 'Tractor Supply on US-79 S',
@@ -55,8 +56,8 @@ class RME_EOC_Location_Presets {
             'addr_grandma'  => '2515',
             'addr_uncle'    => '2507',
             'addr_neighbor' => '2517',
-            'grandma_name'  => 'Loretta Hines',
-            'uncle_name'    => 'Gary',
+            'grandma_name'  => 'Hazel Pittman',
+            'uncle_name'    => 'John',
             'hospital'      => 'UPMC Horizon-Greenville, 110 N Main St, Greenville PA',
             'gas_station'   => 'Anchors Away on Mercer St',
             'local_store'   => 'farm supply store on PA-358',
@@ -77,11 +78,33 @@ class RME_EOC_Location_Presets {
             'addr_grandma'  => '322',
             'addr_uncle'    => '314',
             'addr_neighbor' => '324',
-            'grandma_name'  => 'Edna Harkins',
-            'uncle_name'    => 'Bobby',
+            'grandma_name'  => 'Hazel Pittman',
+            'uncle_name'    => 'John',
             'hospital'      => 'Eastern Oklahoma Medical Center, 105 Wall St, Poteau OK',
             'gas_station'   => "Love's Travel Stop on US-271",
             'local_store'   => 'Atwoods Ranch and Home in Poteau',
+        );
+    }
+
+    public static function jackson_oh() {
+        return array(
+            'label'         => 'Jackson, Ohio',
+            'location'      => 'Jackson, Ohio',
+            'venue'         => '86 Tick Ridge Rd, Jackson, OH',
+            'main_road'     => 'Pattonsville Rd',
+            'flooded_road'  => 'Goose Run Rd',
+            'blocked_road'  => 'E Broadway St',
+            'highway'       => 'US-35',
+            'main_st'       => 'E Main St',
+            'addr_a'        => '2847',
+            'addr_grandma'  => '2849',
+            'addr_uncle'    => '2845',
+            'addr_neighbor' => '2851',
+            'grandma_name'  => 'Hazel Pittman',
+            'uncle_name'    => 'John',
+            'hospital'      => 'Jackson Area Medical Center / Holzer Jackson',
+            'gas_station'   => 'Marathon station on E Main St',
+            'local_store'   => 'Tractor Supply on E Main St',
         );
     }
 
@@ -99,8 +122,8 @@ class RME_EOC_Location_Presets {
             'addr_grandma'  => '8776',
             'addr_uncle'    => '8788',
             'addr_neighbor' => '8774',
-            'grandma_name'  => 'Betty Childers',
-            'uncle_name'    => 'Ray',
+            'grandma_name'  => 'Hazel Pittman',
+            'uncle_name'    => 'John',
             'hospital'      => 'Iredell Memorial Hospital, 557 Brookdale Dr, Statesville NC',
             'gas_station'   => 'BP station on NC-90',
             'local_store'   => 'Tractor Supply on US-21 in Statesville',

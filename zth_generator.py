@@ -45,7 +45,7 @@ DEFAULTS = dict(
     addr_uncle    = "8788",
     addr_neighbor = "8774",
 
-    grandma_name  = "Betty Childers",
+    grandma_name  = "Hazel Pittman",
     uncle_name    = "Ray",
 
     hospital      = "Iredell Memorial Hospital, 557 Brookdale Dr, Statesville NC",

@@ -16,6 +16,7 @@
                         <option value="stoneboro_pa">Stoneboro, Pennsylvania</option>
                         <option value="spiro_ok">Spiro, Oklahoma</option>
                         <option value="stony_point_nc">Stony Point, NC (HQ Default)</option>
+                        <option value="jackson_oh">Jackson, Ohio</option>
                     </select>
                 </td>
             </tr>
@@ -150,11 +151,13 @@
             </tr>
             <tr>
                 <th><label for="rme-grandma-name">Grandmother Name</label></th>
-                <td><input type="text" id="rme-grandma-name" class="regular-text" placeholder="e.g. Ruth Blevins"></td>
+                <td><input type="text" id="rme-grandma-name" class="regular-text" value="Hazel Pittman" readonly>
+                <p class="description">Fixed character name used across all scenarios.</p></td>
             </tr>
             <tr>
                 <th><label for="rme-uncle-name">Uncle Name</label></th>
-                <td><input type="text" id="rme-uncle-name" class="regular-text" placeholder="e.g. Dale"></td>
+                <td><input type="text" id="rme-uncle-name" class="regular-text" value="John" readonly>
+                <p class="description">Fixed character name used across all scenarios.</p></td>
             </tr>
         </table>
 
