@@ -46,6 +46,7 @@ class RME_EOC_Task_Definitions {
                 'student_tasks' => array(
                     'Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.',
                     'Request the current weather forecast and any incoming severe weather warnings.',
+                    sprintf( 'Your location is: %s.', $v ),
                 ),
                 'info' => array(
                     sprintf( 'Your address is %s. Your home was unaffected.', $aa ),
@@ -92,6 +93,7 @@ class RME_EOC_Task_Definitions {
                     'Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.',
                     sprintf( 'Determine the status of your elderly grandmother, %s, who lives at %s. She is 91 years old, lives alone, and you have not heard from her since the disaster.', $gn, $ag ),
                     'If no information is available, leave your contact information and check back regularly.',
+                    sprintf( 'Your location is: %s.', $v ),
                 ),
                 'info' => array(
                     'Last contact was 2 days before the disaster -- she was in good health at that time.',
@@ -114,6 +116,7 @@ class RME_EOC_Task_Definitions {
                     'Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.',
                     sprintf( 'Determine the status of your uncle %s who lives at %s with his wife and daughters (ages 16, 13, and 10). You have not heard from them since the disaster.', $un, $au ),
                     'If no information is available, leave your contact information and check back regularly.',
+                    sprintf( 'Your location is: %s.', $v ),
                 ),
                 'info' => array(
                     sprintf( 'Your uncle\'s house is on high ground -- flooding is unlikely at %s.', $au ),
@@ -135,6 +138,7 @@ class RME_EOC_Task_Definitions {
                 'student_tasks' => array(
                     'Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.',
                     'Request the location of emergency shelters that accept pets. Obtain passable route information from your location.',
+                    sprintf( 'Your location is: %s.', $v ),
                     'You may be asked to use this information in a future scenario -- document it thoroughly.',
                 ),
                 'info' => array(
@@ -157,6 +161,7 @@ class RME_EOC_Task_Definitions {
                 'student_tasks' => array(
                     'Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.',
                     'Request programming information for the 3 nearest amateur radio repeaters in your area.',
+                    sprintf( 'Your location is: %s.', $v ),
                     'You may be asked to use this information in a future scenario -- document it accurately so you can program them.',
                 ),
                 'info' => array(
@@ -202,6 +207,7 @@ class RME_EOC_Task_Definitions {
                 'student_tasks' => array(
                     'Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.',
                     'Pass a message to your employer outside the disaster zone -- you are safe but unable to come to work due to hazardous conditions. Include something beyond your name to identify yourself. Request confirmation the message was received.',
+                    sprintf( 'Your location is: %s.', $v ),
                     'This message will actually be passed -- please use real information. You may use the Radio Made Easy phone number from your homework if you prefer.',
                 ),
                 'info' => array(
@@ -225,6 +231,7 @@ class RME_EOC_Task_Definitions {
                     'Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.',
                     'Pass a message to a loved one outside the disaster zone informing them of your location and status. Request confirmation from the EOC that the message was delivered.',
                     'Ask the EOC to provide some form of authentication from your loved one (a safe word, inside joke, etc.) so you know the message reached the right person.',
+                    sprintf( 'Your location is: %s.', $v ),
                     'This message will actually be passed -- use real information. The EOC will clearly identify this as a training exercise.',
                 ),
                 'info' => array(
@@ -271,6 +278,7 @@ class RME_EOC_Task_Definitions {
                 'student_tasks' => array(
                     'Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.',
                     'Report downed power lines and outages on your road.',
+                    sprintf( 'Your location is: %s.', $v ),
                 ),
                 'info' => array(
                     sprintf( 'Power lines are down at %s at the %s junction -- laying across the westbound lane.', $br, $m ),
@@ -338,6 +346,7 @@ class RME_EOC_Task_Definitions {
                     'Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.',
                     'Your father (68) has been experiencing chest pain and left arm numbness for approximately 45 minutes. He is conscious but pale and sweating. You need the fastest passable route to the nearest hospital.',
                     'You cannot wait for an ambulance -- you must drive him. Ask the EOC to confirm route conditions and identify any obstructions.',
+                    sprintf( 'Your location is: %s.', $v ),
                 ),
                 'info' => array(
                     'Your father took his blood pressure medication this morning.',
@@ -359,6 +368,7 @@ class RME_EOC_Task_Definitions {
                 'student_tasks' => array(
                     'Establish radio communications with the Emergency Operations Center (EOC) using GMRS Channels 1-22.',
                     'Request information on safe waste disposal methods -- the sewer system in your area is no longer functioning.',
+                    sprintf( 'Your location is: %s.', $v ),
                 ),
                 'info' => array(
                     'All 70cm amateur repeaters in your area appear to be down -- you have tried several.',
