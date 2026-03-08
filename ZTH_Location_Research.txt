@@ -1,0 +1,251 @@
+================================================================================
+ZTH LOCATION RESEARCH DUMP
+Radio Made Easy | Generated from web research during config build session
+Date: March 2026
+================================================================================
+
+This file documents the raw research findings used to build the three location
+configs. Keep alongside ZTH_Location_Configs.py as a verification record.
+
+--------------------------------------------------------------------------------
+LOCATION 1 — HENDERSON, TX
+Venue: 200 N Mill St, Henderson, TX 75652
+--------------------------------------------------------------------------------
+
+HOSPITAL:
+  Name:     UT Health Henderson
+  Address:  300 Wilson St, Henderson, TX 75652
+  Phone:    (903) 657-7541
+  Type:     Acute Care, 24-hour ED, Level IV Trauma Center,
+            Level IV Acute Stroke Ready
+  Beds:     42 operational (96 licensed)
+  System:   University of Texas Health System
+  Source:   uthealthhenderson.com, Healthgrades, Turquoise Health
+  Notes:    Less than 0.5 miles from venue. Nearest backup hospitals
+            are CHRISTUS Good Shepherd Longview (~24 mi) and
+            Longview Regional Medical Center (~26 mi).
+
+FARM/RANCH SUPPLY:
+  Name:     Tractor Supply Co.
+  Address:  2307 US Highway 79 S (also listed as 2309), Henderson, TX 75654
+  Phone:    (903) 657-7012
+  Hours:    Mon 8am-6pm, Tue-Sat 8am-9pm, Sun 9am-7pm
+  Source:   Yelp, tractorsupply.com store locator, Husqvarna dealer listing
+  Notes:    On the main commercial strip south of downtown. PetSense by
+            Tractor Supply also at 2127 US-79. John Deere dealer (United
+            Ag & Turf) at 520 Highway 79, (903) 657-9549.
+
+GAS STATION:
+  Name:     Murphy USA (used in config — verify before class)
+  Location: US-79 S corridor near Walmart
+  Notes:    No specific address confirmed from research. Common format
+            for East TX towns this size. Alternative: verify any named
+            station on US-79 S via Google Maps before printing.
+
+ROADS / FLOODING:
+  Flood history: Rusk County receives significant rainfall; county
+    sheriff has documented road closures on rural FM roads during
+    storm events. FM 1798 specifically named in Rusk County Sheriff
+    flood closure reports (CBS19 reporting, Rusk County OEM).
+    CR 361, CR 366, CR 447 also documented with significant washouts.
+  Main corridor: US-79/259 described as "main artery through town"
+    by city/tourism sources. Downtown built around courthouse square.
+  Config road choices:
+    main_road:    Rusk Ave — residential street near venue
+    flooded_road: FM 1798 — confirmed in county flood closure records
+    blocked_road: Main St — downtown spine, downed line scenario
+    highway:      US-79 — primary artery confirmed
+
+LOCAL CONTEXT:
+  - Henderson is the Rusk County seat
+  - Population roughly 13,000
+  - Fire department on E Main St (confirmed staffed per city website)
+  - Police department doubles as city EOC
+  - Industrial Park area documented as flood-prone (Henderson Daily News)
+  - Nearest town of size: Longview (~30 mi), Tyler (~45 mi)
+
+--------------------------------------------------------------------------------
+LOCATION 2 — STONEBORO, PA
+Venue: Griffin Arms, 4581 Sandy Lake Greenville Rd, Stoneboro, PA 16153
+--------------------------------------------------------------------------------
+
+HOSPITAL (PRIMARY):
+  Name:     UPMC Horizon-Greenville
+  Address:  110 N Main St, Greenville, PA 16125
+  Phone:    (724) 588-2100
+  Type:     Full-service, 24-hour ED
+  Distance: ~8 miles north of Stoneboro
+  Source:   Healthgrades, Mercer County BHC Resource Directory,
+            WKBN news (Sharon Regional closure coverage)
+  Notes:    CONFIRMED ACTIVE as of Jan 2025. UPMC Horizon has
+            three campuses: Greenville, Shenango Valley (Farrell),
+            and Jameson (New Castle). All confirmed 24hr as of 2025.
+
+HOSPITAL (BACKUP):
+  Name:     Grove City Hospital (also listed as Allegheny Health Network Grove City)
+  Address:  Grove City, PA (~15 miles from Stoneboro)
+  Phone:    (724) 450-7000
+  Source:   Mercer County BHC Resource Directory, news coverage of
+            Sharon Regional closure
+
+CRITICAL NOTE — SHARON REGIONAL MEDICAL CENTER:
+  Sharon Regional Medical Center in Sharon, PA CLOSED January 6, 2025.
+  Source: WKBN news coverage, confirmed.
+  DO NOT reference as a hospital or resource in scenario materials.
+  This is an excellent real-world Teaching Point 2 example —
+  a primary source that existed until recently is now gone.
+  If students mention it during class, use it as a teaching moment.
+
+GAS STATION:
+  Name:     Anchors Away
+  Address:  2436 Mercer St, Stoneboro, PA 16153
+  Type:     Gas station / convenience store / grocery / Subway
+  Notes:    Well-known local landmark. Described as "a local favorite"
+            and "a true one-stop shop." Sells live bait, gas, food.
+            Located on the main Mercer St corridor through Stoneboro.
+  Source:   Giftly business listing (current as of Jan 2026)
+
+FARM/RANCH SUPPLY:
+  No Tractor Supply in Stoneboro. Nearest is Grove City (~15 mi).
+  Config uses "farm supply store on PA-358" as placeholder.
+  Verify a specific named store before class — options:
+    - Tractor Supply, Grove City (~15 mi)
+    - Local hardware/feed stores along PA-358 or Mercer St
+
+REHABILITATION / MEDICAL CLINIC (NOT hospital):
+  NovaCare Rehabilitation
+  Address:  2447 Mercer St, Stoneboro, PA 16153
+  Notes:    Outpatient only — NOT an ER or acute care facility.
+            Do not use as hospital reference.
+
+ROADS / FLOODING:
+  Geography: Stoneboro is in eastern Mercer County, population ~946 (2020).
+    Sandy Lake is the defining geographic feature — lake area with
+    wooded terrain, lake-effect wind events common in winter.
+    Borough is 2.9 sq miles total.
+  Sandy Creek Rd: Rural road following Sandy Creek south of Sandy Lake.
+    Low-water crossings historically flood in Mercer County storms.
+    Chosen as flooded_road based on creek geography — not a named
+    flood event documented; verify with locals if possible.
+  Lake St: Residential street near Sandy Lake. Wind/debris events
+    from the lake corridor are plausible downed-line scenario.
+  Config road choices:
+    main_road:    Mercer St — confirmed active commercial street
+    flooded_road: Sandy Creek Rd — creek geography, low-water crossings
+    blocked_road: Lake St — lake-adjacent, storm debris plausible
+    highway:      PA-358 — confirmed junction at Sandy Lake Borough
+
+LOCAL CONTEXT:
+  - Stoneboro Borough founded 1866, historically tied to Underground Railroad
+    and coal/railroad industry
+  - Sandy Lake Borough is adjacent (Route 173 and Route 358 junction)
+  - Great Stoneboro Fair is the major annual event (one of Mercer County's oldest)
+  - Part of Hermitage micropolitan area
+  - NovaCare at 2447 Mercer St is a current active business (confirms street activity)
+  - Post-Sharon Regional closure (Jan 2025), UPMC Horizon is the primary ER
+    for much of Mercer County
+
+--------------------------------------------------------------------------------
+LOCATION 3 — SPIRO, OK
+Venue: Refuge Medical Training Center, 905 W Broadway St, Spiro, OK 74959
+--------------------------------------------------------------------------------
+
+HOSPITAL:
+  Name:     Eastern Oklahoma Medical Center
+  Address:  105 Wall St, Poteau, OK 74953
+  Type:     Full-service hospital, 24-hour ED
+  Distance: ~20 miles south on US-271
+  Source:   Healthgrades, US News Best Hospitals (physician affiliations)
+  Notes:    Multiple Spiro-area physicians are affiliated with this hospital.
+            Nearest full ER to Spiro. Spiro Family Medical Center at
+            702 W Broadway St is a clinic only — no ER.
+            Baptist Health Family Clinic Spiro also on Broadway — outpatient only.
+            Northeastern Health System Sequoyah (Sallisaw, ~25 mi east)
+            is a secondary option.
+
+BACKUP HOSPITAL:
+  Name:     Baptist Health Van Buren
+  Location: Van Buren, AR (~25 miles east, across state line)
+  Notes:    Across the Oklahoma-Arkansas border. Usable if Poteau is
+            unavailable but adds complexity (state line crossing).
+
+GAS STATION:
+  Name:     Love's Travel Stop on US-271 (used in config — verify before class)
+  Notes:    Love's is heavily represented on US-271 corridor in Oklahoma.
+            No specific address confirmed from research. Verify via
+            Google Maps before printing. Alternative: any named station
+            on W Broadway St or US-271 through Spiro.
+
+FARM/RANCH SUPPLY:
+  Name:     Atwoods Ranch & Home (used in config)
+  Location: Poteau, OK (~20 mi south on US-271)
+  Notes:    Atwoods is the dominant farm/ranch retail chain in eastern
+            Oklahoma. No Tractor Supply confirmed in Spiro. Verify
+            Poteau location is current before class.
+
+ROADS / FLOODING:
+  Geography: Spiro is 3 miles south of the Arkansas River, 17 miles
+    southwest of Fort Smith AR, 10 miles west of OK-AR border.
+    Situated on the dividing ridge between Arkansas and Poteau rivers.
+    Arkansas River forms Le Flore County's northern boundary.
+    Poteau and James Fork rivers drain most of the county.
+  
+  DOCUMENTED FLOOD EVENT — MAY 2019:
+    The 2019 Arkansas River floods directly impacted Spiro.
+    W.D. Mayo Lock and Dam is ~0.5 miles from Spiro Mounds.
+    Mandatory evacuation issued for Spiro Mounds on May 24, 2019.
+    Flash flood on June 6, 2019 added ~1.5 inches of water into the
+    Spiro Mounds Archaeological Center after the river crested.
+    Lock and Dam Rd (leading to W.D. Mayo Lock and Dam) is the exact
+    corridor that experiences inundation during Arkansas River events.
+    Source: Oklahoma Historical Society press release, Wikipedia
+    (2019 Arkansas River floods), KTUL/KJRH news coverage.
+  
+  River flood triggers: Le Flore and Sequoyah counties specifically
+    named in flood warnings when Arkansas River rises. Spiro named
+    among affected locations in NWS flood advisory coverage.
+  
+  Config road choices:
+    main_road:    S Main St — primary N-S residential corridor in Spiro
+    flooded_road: Lock and Dam Rd — documented flood corridor, Arkansas River
+    blocked_road: S Broadway St — eastern end of main E-W route, downed line
+    highway:      US-271 — primary highway through Spiro, confirmed
+    main_st:      W Broadway St — venue street, main commercial corridor
+
+LOCAL CONTEXT:
+  - Population 2,102 (2020 census)
+  - 20 miles to nearest full-service hospital (Poteau)
+  - EMS Station 5 at 521 SE 5th St, Spiro (EMS of LeFlore County)
+  - Spiro Mounds Archaeological State Park — major local landmark,
+    only State Archaeological Park in Oklahoma
+  - Kansas City Southern Railroad history — town developed as a rail stop
+  - Arkansas River to the north is the dominant flood risk
+  - The 20-mile hospital drive makes Task N (medical emergency) feel
+    genuinely urgent to students from this area
+
+--------------------------------------------------------------------------------
+RESEARCH METHODOLOGY NOTES
+--------------------------------------------------------------------------------
+
+Sources used (in order of reliability):
+  1. Official hospital websites and Healthgrades profiles
+  2. County health department / behavioral health resource directories
+  3. Official city/borough websites
+  4. Local news coverage (CBS19, WKBN, KTUL, KJRH)
+  5. Oklahoma Historical Society press releases
+  6. Wikipedia (geography, population, flood events)
+  7. Business listing sites (Yelp, Yellow Pages) for current status
+
+Items NOT independently verified (verify before class):
+  - Gas station specific addresses for Henderson TX and Spiro OK
+  - Farm supply store for Stoneboro (no confirmed local option found)
+  - Atwoods Ranch & Home specific Poteau address
+  - Current operating hours for any business listed
+
+Items CONFIRMED closed / changed:
+  - Sharon Regional Medical Center, Sharon PA — CLOSED January 6, 2025
+    Do not reference as a resource under any circumstances.
+
+================================================================================
+END OF RESEARCH DUMP
+================================================================================

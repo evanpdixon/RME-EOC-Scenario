@@ -1,0 +1,929 @@
+================================================================================
+ZERO TO HERO RADIO OPERATOR — SCENARIO SYSTEM
+REBUILD SPECIFICATION
+Radio Made Easy | Evan
+================================================================================
+
+This file contains everything needed to rebuild the entire ZTH scenario system
+from scratch using Claude. Paste this file into a new Claude conversation and
+say: "Rebuild the Zero to Hero scenario generator and brief/debrief guide from
+this spec."
+
+--------------------------------------------------------------------------------
+SYSTEM OVERVIEW
+--------------------------------------------------------------------------------
+
+Two Python scripts generate all class materials via command line:
+
+  zth_generator.py
+    - Prompts for location config (3 modes: interactive / fill-in-blank / defaults)
+    - Generates individual student task card PDFs (Student_01.pdf ... Student_N.pdf)
+    - Generates a Facilitator_Reference.pdf
+    - Merges all into PrintAll_[Location].pdf
+    - Handles class sizes 12-30 with conflict-aware task distribution
+
+  generate_brief_debrief.py
+    - No prompts; change LOCATION and VENUE at top of file
+    - Generates ZTH_Brief_Debrief.pdf (3 parts: Brief, Debrief, Convoy)
+    - Facilitator use only — not distributed to students
+
+PDF stack: reportlab (pdfkit+wkhtmltopdf was considered; reportlab was chosen)
+Merge: pypdf PdfWriter/PdfReader
+No external API dependencies. All runs locally.
+
+--------------------------------------------------------------------------------
+ZTH_GENERATOR.PY — FULL SPEC
+--------------------------------------------------------------------------------
+
+STARTUP PROMPT (printed at run):
+  Mode 1 - Interactive   : prompts for each location detail
+  Mode 2 - Fill-in-blank : prints blanks (_______________) where location
+                           details go; asks only class_size and output_dir;
+                           output files get _BLANK suffix
+  Mode 3 - Defaults      : uses Jackson, Ohio values, no prompts
+
+CONFIG FIELDS (all collected via get_config()):
+  class_size    int     (default: 20)
+  location      str     (default: "Jackson, Ohio")
+  venue         str     (default: "86 Tick Ridge Rd, Jackson, OH")
+  output_dir    str     (default: ".")
+  main_road     str     road used for all neighbor addresses in A/C/D
+                        (default: "Pattonsville Rd")
+  flooded_road  str     road with flooding contradiction in E/L
+                        (default: "Goose Run Rd")
+  blocked_road  str     road with downed lines in K/B/N/J
+                        (default: "E Broadway St")
+  highway       str     nearest major highway (default: "US-35")
+  main_st       str     local commercial corridor (default: "E Main St")
+  addr_a        str     house number on main_road for Task A survivor
+                        (default: "2847")
+  addr_grandma  str     house number for Task C grandmother
+                        (default: "2849")
+  addr_uncle    str     house number for Task D uncle
+                        (default: "2845")
+  addr_neighbor str     house number for Task C neighbor-of-grandma
+                        (default: "2851")
+  grandma_name  str     (default: "Hazel Pitman")
+  uncle_name    str     (default: "John")
+  hospital      str     (default: "Jackson Area Medical Center / Holzer Jackson")
+  gas_station   str     (default: "Marathon station on E Main St")
+  local_store   str     (default: "Tractor Supply on E Main St")
+
+DISTRIBUTION ALGORITHM:
+  16 total tasks (A-P). Task N is the only priority=True task.
+  - class_size <= 16: assign one task per student; leftover tasks absorbed
+    as 2nd cards where conflict rules allow
+  - class_size = 16: one task per student exactly
+  - class_size > 16: all 16 unique tasks assigned to first 16 students;
+    remaining students get duplicates cycling through the pool
+  Conflict pairs are enforced — tasks that share critical intel cannot go
+  to the same student. Conflicts are bidirectional.
+  Use seed=42 for reproducible assignment.
+
+PDF STYLING:
+  All PDFs use reportlab SimpleDocTemplate, letter size, Helvetica fonts.
+  Student cards: 0.85" margins all sides, 0.75" bottom for footer.
+  Facilitator ref: 0.75" margins.
+  Footer on every page: copyright line centered at 0.45" from bottom.
+  COPYRIGHT = "© Radio Made Easy. Proprietary training material.
+    Unauthorized reproduction, distribution, or use outside of
+    licensed Radio Made Easy courses is strictly prohibited."
+
+STUDENT CARD LAYOUT (per task):
+  [If priority=True]: Red banner "⚠ HIGH PRIORITY — REPORT IMMEDIATELY TO NET CONTROL ⚠"
+  Title: "Task [Letter] ([Phonetic])"  — red text if priority
+  Subtitle: location string (grey, centered)
+  Body: "You are within the disaster zone without cell phone, internet access,
+         or electricity."
+  Section: "Tasks to complete:" — bulleted list
+  Section: "Information you can provide:" — bulleted list
+  Footer right-aligned: [S-NN] student number reference
+  If student has 2 tasks, PageBreak between them.
+
+FACILITATOR REFERENCE LAYOUT:
+  Header: location | class size | tasks distributed
+  Red banner: high priority task callout for N
+  Note about EOC routing around blocked_road for task N
+  Section: "Built-in Contradictions" (4 pairs, see below)
+  Section: "Cross-References" (6 pairs, see below)
+  Section: "Student Assignments" grid table:
+    columns: # | Code | Task(s) | Notes
+    Notes column shows fac_notes from each task
+
+PRINT-ALL:
+  Facilitator reference first, then Student_01 through Student_N in order.
+  Merged with pypdf.
+
+--------------------------------------------------------------------------------
+THE 16 TASKS
+--------------------------------------------------------------------------------
+
+Each task has: letter, phonetic, priority flag, conflict list, student_tasks
+(bulleted list shown to student), info (boots-on-ground intel, 5-6 bullets),
+and fac_notes (facilitator reference only, never shown to students).
+
+All location-specific strings are built from cfg fields at runtime.
+Shorthand used below: m=main_road, fr=flooded_road, br=blocked_road,
+hw=highway, ms=main_st, aa=addr_a+m, ag=addr_grandma+m, au=addr_uncle+m,
+an=addr_neighbor+m, gn=grandma_name, un=uncle_name, ho=hospital,
+gs=gas_station, ls=local_store, v=venue.
+
+── TASK A (Alpha) ────────────────────────────────────────────────
+priority: False | conflicts: C, D
+
+student_tasks:
+  - Establish radio communications with the EOC.
+  - Request the current weather forecast and any incoming severe weather warnings.
+
+info:
+  - Your address is [aa]. Your home was unaffected.
+  - Your neighbor at [ag] evacuated safely before their home was damaged.
+    You have not seen or heard from them since.
+  - Your neighbors at [au] are unaffected and safely at home.
+    You can relay messages to or from them if needed.
+  - Water in the roadside ditch along [m] near [fr] was rising rapidly this morning.
+  - A church about a half mile south on [m] appeared to have lights on —
+    possibly running on a generator.
+  - A utility truck convoy was spotted heading east on [hw] approximately 2 hours ago.
+
+fac_notes: FEEDS C (grandmother status at [ag]) and D (uncle status at [au]).
+
+── TASK B (Bravo) ────────────────────────────────────────────────
+priority: False | conflicts: (none)
+
+student_tasks:
+  - Establish radio communications with the EOC.
+  - Determine the nearest location where propane filling or exchange is available.
+  - Obtain payment methods, possible driving routes from your location, and cost.
+  - Your location is: [v].
+  - You may be asked to use this information in a future scenario —
+    document it accurately.
+
+info:
+  - Propane exchange racks at the gas station on [ms] appeared completely empty
+    when you drove past.
+  - You have approximately 3 days of propane remaining — not an immediate emergency.
+  - A neighbor mentioned that [ls] was open as of yesterday, but you have not
+    confirmed today.
+  - When you drove through this morning, the [br] / [m] junction was clear —
+    no obstructions.
+  - [m] has debris but is passable in a truck.
+  - You have approximately half a tank of gas in your vehicle.
+
+fac_notes: CONTRADICTION with K — B reports [br] clear (earlier this morning);
+           K reports lines now down there.
+
+── TASK C (Charlie) ──────────────────────────────────────────────
+priority: False | conflicts: A, D
+
+student_tasks:
+  - Establish radio communications with the EOC.
+  - Determine the status of your elderly grandmother, [gn], who lives at [ag].
+    She is 91 years old, lives alone, and you have not heard from her since
+    the disaster.
+  - If no information is available, leave your contact information and check
+    back regularly.
+
+info:
+  - Last contact was 2 days before the disaster — she was in good health.
+  - She drives a red Ford Ranger, usually parked in the driveway.
+  - She takes daily heart medication and likely has only 3–4 days of supply
+    remaining.
+  - Her neighbor at [an] has also not been heard from.
+  - She does not have a radio or generator.
+  - You have a spare key to her home if someone is able to check on her.
+
+fac_notes: Task A has direct intel on [ag] — A and C must not share a packet.
+
+── TASK D (Delta) ────────────────────────────────────────────────
+priority: False | conflicts: A, C
+
+student_tasks:
+  - Establish radio communications with the EOC.
+  - Determine the status of your uncle [un] who lives at [au] with his wife
+    and daughters (ages 16, 13, and 10). You have not heard from them since
+    the disaster.
+  - If no information is available, leave your contact information and check
+    back regularly.
+
+info:
+  - Your uncle's house is on high ground — flooding is unlikely at [au].
+  - His teenage daughter knows basic radio operation.
+  - He has a tractor and spare fuel cans in the barn.
+  - The family was planning to shelter in place before the disaster.
+  - Your uncle is a retired EMT with a first aid kit.
+  - Their home has a woodstove and could potentially shelter additional people.
+
+fac_notes: Task A has direct intel on [au] — A and D must not share a packet.
+
+── TASK E (Echo) ─────────────────────────────────────────────────
+priority: False | conflicts: (none)
+
+student_tasks:
+  - Establish radio communications with the EOC.
+  - Request the location of emergency shelters that accept pets. Obtain passable
+    route information from your location.
+  - You may be asked to use this information in a future scenario —
+    document it thoroughly.
+
+info:
+  - You have 2 dogs and a horse — you need a facility that can accommodate
+    large animals.
+  - You drove through the [fr] creek crossing about 90 minutes ago. The water
+    was high but the road was still passable.
+  - You spotted what appeared to be a Red Cross vehicle near the high school.
+  - The fairgrounds had lights and activity last night, possibly running on
+    a generator.
+  - You have a horse trailer available and could assist with other animal
+    transport if needed.
+  - A neighbor mentioned hearing there may be a shelter at the National Guard
+    armory — unconfirmed.
+
+fac_notes: CONTRADICTION with L — Echo: [fr] passable 90 min ago. Lima: now
+           completely flooded. EOC must reconcile; Lima is more recent.
+
+── TASK F (Foxtrot) ──────────────────────────────────────────────
+priority: False | conflicts: J
+
+student_tasks:
+  - Establish radio communications with the EOC.
+  - Request programming information for the 3 nearest amateur radio repeaters
+    in your area.
+  - You may be asked to use this information in a future scenario —
+    document it accurately so you can program them.
+
+info:
+  - You drove past a chain pharmacy on [ms] — staff confirmed completely out
+    of antibiotics.
+  - A nearby pharmacy (large retailer) appeared to be open with a line of cars
+    at the drive-through.
+  - A neighbor who is a ham radio operator mentioned that a local repeater is
+    running on emergency power.
+  - All traffic lights in the area appear to be dark.
+  - The fire department on [ms] appeared fully staffed with trucks staged outside.
+  - You saw a generator truck parked outside the courthouse.
+
+fac_notes: OVERLAPS J — both carry pharmacy antibiotic intel. F and J must not
+           share a packet.
+
+── TASK G (Golf) ─────────────────────────────────────────────────
+priority: False | conflicts: (none)
+
+student_tasks:
+  - Establish radio communications with the EOC.
+  - Request the nearest location with livestock feed available. Determine feed
+    types, payment methods, and passable routes.
+  - Your location is: [v].
+  - You may be asked to use this information in a future scenario —
+    document it accurately.
+
+info:
+  - The [gs] appeared completely dark and closed when you passed earlier.
+  - [ls] had a half-full parking lot and appeared to be open.
+  - A neighbor has extra hay bales they are willing to share at no cost.
+  - [fr] at the creek crossing was completely flooded and impassable as of
+    about an hour ago.
+  - You spotted a utility crew staging near the [m] / [hw] interchange.
+  - You have a flatbed truck available if large quantities of feed need to be
+    transported.
+
+fac_notes: CONTRADICTION with P — G: [gs] dark/closed. P: cars lined up.
+           EOC must call to confirm.
+
+── TASK H (Hotel) ────────────────────────────────────────────────
+priority: False | conflicts: (none)
+
+student_tasks:
+  - Establish radio communications with the EOC.
+  - Pass a message to your employer outside the disaster zone — you are safe
+    but unable to come to work due to hazardous conditions. Include something
+    beyond your name to identify yourself. Request confirmation the message
+    was received.
+  - This message will actually be passed — please use real information.
+    You may use the Radio Made Easy phone number from your homework if you prefer.
+
+info:
+  - Propane exchange racks at the gas station on [ms] were completely empty.
+  - A neighbor told you that some propane filling stations are still operational
+    — cash only, one tank per person.
+  - Your neighborhood has significant tree debris but roads are passable.
+  - You observed a chainsaw crew actively clearing [m] near the [hw] junction.
+  - You plan to shelter in place for at least the next 48 hours.
+  - You have a portable hand-crank radio and will continue monitoring the
+    emergency frequency.
+
+fac_notes: Provides useful propane context that confirms and adds detail to
+           Task B's request.
+
+── TASK I (India) ────────────────────────────────────────────────
+priority: False | conflicts: (none)
+
+student_tasks:
+  - Establish radio communications with the EOC.
+  - Pass a message to a loved one outside the disaster zone informing them of
+    your location and status. Request confirmation from the EOC that the message
+    was delivered.
+  - Ask the EOC to provide some form of authentication from your loved one
+    (a safe word, inside joke, etc.) so you know the message reached the
+    right person.
+  - This message will actually be passed — use real information. The EOC will
+    clearly identify this as a training exercise.
+
+info:
+  - Your home is structurally sound — only minor basement flooding.
+  - You have food and water for approximately 4 days.
+  - You heard sirens heading north approximately 30 minutes ago.
+  - A neighbor told you a local bridge is intact and passable.
+  - You have a hand-crank radio and have been monitoring the local AM station
+    for updates.
+  - You spotted a National Guard vehicle heading toward town on [hw].
+
+fac_notes: (none — authentication teaching moment handled in debrief)
+
+── TASK J (Juliet) ───────────────────────────────────────────────
+priority: False | conflicts: F, K
+
+student_tasks:
+  - Establish radio communications with the EOC.
+  - Request the location of the nearest pharmacies with antibiotic availability.
+    Confirm operating hours, payment methods, and passable driving routes.
+  - You specifically need antibiotics for a child's ear infection.
+  - Your location is: [v].
+  - You may be asked to use this information in a future scenario —
+    document it accurately.
+
+info:
+  - Your child has had a fever for 2 days — antibiotics are needed but not
+    immediately life-threatening.
+  - You personally drove to a chain pharmacy and were turned away —
+    completely out of antibiotics.
+  - A neighbor who just returned from a large retailer said the pharmacy there
+    still has limited stock.
+  - You observed power lines down at [br] at the [m] junction —
+    the road appeared partially blocked.
+  - You have approximately 2 days of children's Tylenol to manage the fever
+    in the meantime.
+  - Your route into town runs through [br] — the downed lines will affect
+    your travel.
+
+fac_notes: OVERLAPS F (antibiotic intel) and K (both observe downed lines at
+           [br]). J must not share a packet with either.
+
+── TASK K (Kilo) ─────────────────────────────────────────────────
+priority: False | conflicts: J
+
+student_tasks:
+  - Establish radio communications with the EOC.
+  - Report downed power lines and outages on your road.
+
+info:
+  - Power lines are down at [br] at the [m] junction — laying across the
+    westbound lane.
+  - You drove through just before the lines came down. The road is now
+    impassable westbound.
+  - A tree is also down on the shoulder of [m], approximately 1 mile south
+    of [hw].
+  - No utility crews have been seen in the area yet.
+  - Your neighbor has a whole-home generator and is offering to charge devices
+    for nearby residents.
+  - The [gs] had lights on and appeared to be operational when you passed.
+
+fac_notes: CONTRADICTION with B — K: [br] now blocked. B: reported it clear
+           this morning. Timeline resolves it (B was earlier). Also FEEDS N —
+           medical task needs alternate route. K must not share a packet with J.
+
+── TASK L (Lima) ─────────────────────────────────────────────────
+priority: False | conflicts: (none)
+
+student_tasks:
+  - Establish radio communications with the EOC.
+  - Report severe flooding and an impassable road.
+  - Your location: [fr] at the creek crossing near [m] —
+    water is completely over the road.
+
+info:
+  - The water at the [fr] creek crossing is completely over the road and
+    appears to still be rising.
+  - You observed a neighbor's livestock loose on [m] near the flooding.
+  - An elderly man was seen attempting to cross the flooded road on foot —
+    EOC should be aware.
+  - Bottled water is being distributed at local fire departments.
+  - Your home is on high ground and unaffected.
+  - You have not seen any emergency vehicles or road crews in this area.
+
+fac_notes: CONTRADICTION with E and B — both reported [fr] passable earlier.
+           Lima is most recent. Also FEEDS M (fire dept water distribution).
+
+── TASK M (Mike) ─────────────────────────────────────────────────
+priority: False | conflicts: (none)
+
+student_tasks:
+  - Establish radio communications with the EOC.
+  - Request information on water distribution locations and water purification
+    methods using common household resources.
+  - Your location is: [v].
+  - You may be asked to use this information in a future scenario —
+    document it accurately.
+
+info:
+  - A neighbor told you that fire departments in the area have bottled water
+    available.
+  - You have a gravity filter and enough supplies for approximately 2 weeks.
+  - [fr] creek near your location is visibly contaminated with debris and
+    runoff — do not use untreated.
+  - A neighbor has been collecting rainwater in clean containers as a short-term
+    backup.
+  - Hot meals are reportedly being served at local churches from 7am to 7pm.
+  - Church parking lots on [ms] had vehicles and activity when you last passed.
+
+fac_notes: (none)
+
+── TASK N (November) — HIGH PRIORITY ────────────────────────────
+priority: TRUE | conflicts: (none)
+NOTE: This is the EOC triage target. Always included regardless of class size.
+Red banner on student card. Flagged in facilitator reference.
+
+student_tasks:
+  - Establish radio communications with the EOC.
+  - Your father (68) has been experiencing chest pain and left arm numbness
+    for approximately 45 minutes. He is conscious but pale and sweating.
+    You need the fastest passable route to the nearest hospital.
+  - You cannot wait for an ambulance — you must drive him. Ask the EOC to
+    confirm route conditions and identify any obstructions.
+
+info:
+  - Your father took his blood pressure medication this morning.
+  - You have a reliable truck with approximately three-quarters of a tank of gas.
+  - A neighbor has offered their 4WD truck and can drive if needed.
+  - You are aware that [br] near the [m] junction may have an obstruction —
+    the EOC should confirm or route around it.
+  - You have a basic first aid kit in the truck.
+  - Your father has a history of high blood pressure but no prior cardiac events.
+
+fac_notes: HIGH PRIORITY — EOC triage target. Route to [ho]. [br] blocked by
+           downed lines (Task K) — EOC must route around. Watch whether Net
+           Control prioritizes this call correctly.
+
+── TASK O (Oscar) ────────────────────────────────────────────────
+priority: False | conflicts: (none)
+
+student_tasks:
+  - Establish radio communications with the EOC.
+  - Request information on safe waste disposal methods — the sewer system in
+    your area is no longer functioning.
+
+info:
+  - All 70cm amateur repeaters in your area appear to be down —
+    you have tried several.
+  - A neighbor who is a ham radio operator told you there is one 2m repeater
+    on a nearby ridge running on emergency power, but does not know which one.
+  - You have a camp toilet and approximately 1 week of supplies.
+  - A nearby neighbor is burning household trash in a barrel —
+    raising health concerns.
+  - A noticeable sewer smell is present in the low-lying areas of your
+    neighborhood.
+  - You heard from a neighbor that the local water treatment plant may be offline.
+
+fac_notes: FEEDS F — Oscar's 2m repeater intel complements Foxtrot's repeater
+           lookup task.
+
+── TASK P (Papa) ─────────────────────────────────────────────────
+priority: False | conflicts: (none)
+NOTE: Default convoy mission target (gas station fuel run).
+
+student_tasks:
+  - Establish radio communications with the EOC.
+  - Request information on gasoline availability — location, operating hours,
+    price, payment methods, and route from your location.
+  - Your location is: [v].
+  - You may be asked to use this information in a future scenario —
+    document it accurately.
+
+info:
+  - You saw cars lined up at [gs] — it appeared to be operational.
+  - A handwritten sign at the pump stated cash only, 5-gallon limit per vehicle.
+  - The line was approximately 20–30 vehicles when you observed —
+    expect a significant wait.
+  - The gas station on the highway appeared dark and closed.
+  - You have a 5-gallon gas can and a siphon hose available if needed.
+  - A local bridge you know of is intact and passable.
+
+fac_notes: CONTRADICTION with G — Papa: [gs] has cars lined up and operational.
+           Golf: appeared dark and closed. EOC should call to confirm.
+
+--------------------------------------------------------------------------------
+BUILT-IN CONTRADICTIONS (4 pairs)
+--------------------------------------------------------------------------------
+
+E <-> L  |  [fr] flooding
+  Echo drove through 90 min ago — high but passable.
+  Lima reports road now completely flooded and rising.
+  EOC must reconcile. Lima is more recent and correct.
+
+G <-> P  |  [gs]
+  Golf: appeared dark and completely closed.
+  Papa: cars lined up, appeared operational.
+  EOC should attempt to call and confirm before routing anyone there.
+
+B <-> K  |  [br] / [m] junction
+  Bravo: drove through this morning — clear.
+  Kilo: lines came down after Bravo passed — now blocked westbound.
+  Timeline resolves it. Kilo is more recent. Critical for Task N routing.
+
+F <-> J  |  Antibiotic availability
+  Foxtrot: chain pharmacies turning people away (confirmed out).
+  Juliet: personally turned away; large retailer may have limited stock.
+  These reinforce each other more than contradict — EOC should synthesize both.
+
+--------------------------------------------------------------------------------
+CROSS-REFERENCES (6 pairs)
+--------------------------------------------------------------------------------
+
+A -> C    Alpha observes neighbor at [ag] evacuated safely — directly answers
+          Charlie's task.
+A -> D    Alpha observes neighbor at [au] unaffected and home — directly answers
+          Delta's task.
+L -> M    Lima mentions fire dept water distribution — confirms intel needed
+          by Mike.
+O -> F    Oscar reports 2m repeater on emergency power — complements Foxtrot's
+          repeater lookup.
+K/J -> N  Both Kilo and Juliet observe [br] blocked — EOC must route medical
+          task around this.
+H -> B    Hotel confirms propane exchanges empty and filling stations cash-only
+          — adds detail to Bravo's request.
+
+--------------------------------------------------------------------------------
+GENERATE_BRIEF_DEBRIEF.PY — FULL SPEC
+--------------------------------------------------------------------------------
+
+Two variables at top of file: LOCATION and VENUE (strings, no prompts).
+Generates a single ZTH_Brief_Debrief.pdf with three parts.
+
+PDF STYLING: Same reportlab stack. Dark banners (#222222), red banners (#8B0000)
+for critical items, tan shaded tip boxes (#F5F0E8 background, #C8B89A border)
+for all talking points and instructor callouts. Letter size, 0.85" margins.
+
+================================================================================
+PART 1 — SCENARIO BRIEF
+================================================================================
+
+Delivered to the full class before separating into groups and distributing cards.
+
+SECTION: Overview
+  Generic framing — Hurricane Helene or similar disaster. Two groups:
+  Survivors and EOC. Both treat everything as real.
+
+SECTION: The Scenario
+  Major disaster has struck. For anyone inside the disaster zone:
+  - No cellular service.
+  - No internet access.
+  - Possibly no ability to physically leave their location.
+  - Their radio is their only lifeline.
+
+  TIP BOX (talking point):
+    "Put yourself in the shoes of a real survivor. You've just woken up after
+    the storm. The power is out. Your phone has no signal. You can't drive out —
+    roads may be blocked. The only thing connecting you to the outside world is
+    this radio. That's where we're starting from."
+
+SECTION: The Two Groups
+
+  Survivors:
+    - Go to vehicle, quiet area outside, anywhere away from EOC.
+    - Task card contains your situation. You are that person.
+    - Call into EOC on established net frequency.
+    - Once your task is complete, you are NOT done (see below).
+
+  EOC:
+    - Stays in classroom. Full cell/internet access.
+    - Establish net on GMRS simplex (channels 15–22).
+    - Appoint Net Control to manage and prioritize traffic.
+    - Support roles: researcher, logger, relay.
+    - Thorough written log of every communication.
+    - Connect survivor intel to other survivors (key emphasis).
+    - Verify outside info before routing — online data may be outdated.
+    - Always identify as training exercise to anyone outside scenario.
+
+CRITICAL RED BANNER: "READ THIS TO THE CLASS VERBATIM OR VERY CLOSE TO IT"
+
+  TIP BOX (near-verbatim read):
+    "Here's something I need everyone to hear clearly. The information gathered
+    during this exercise will be used in the next one. After we debrief, we are
+    going to select one of these tasks and execute a real convoy supply run based
+    solely on what was collected over the radio during this exercise.
+
+    That means if a survivor passed bad information, or if the EOC gave wrong
+    directions, or if anyone failed to document something they heard — that
+    affects the convoy. Every piece of information shared on this net has real
+    consequences in thirty minutes.
+
+    A real survivor in a real disaster would be writing down everything they could
+    possibly hear on that radio — not just what applies to them. Frequencies, road
+    conditions, pharmacy hours, who's at what address — all of it. Treat this net
+    as your only source of intelligence about the world outside your door.
+    Document everything."
+
+SECTION: After Your Task Is Complete
+  - Continue monitoring the net — do not go quiet.
+  - Document all information you hear from other survivors and the EOC.
+  - You may be called on during debrief to contribute intel from what you heard.
+  - In a real scenario, every survivor would be doing exactly this.
+
+  TIP BOX:
+    "Think of it like this — if the EOC tells another survivor that [flooded road]
+    is flooded, that affects your route too. The net is a shared intelligence
+    resource. Use it like one."
+
+SECTION: Paper, Pen, and Legible Handwriting
+  (Immediately before the pre-exercise checklist)
+  Key points:
+  - Every survivor needs something to write with and write on. Not optional.
+  - In a real disaster your notes may be the ONLY surviving record of critical
+    information — routes, resources, contacts, status of loved ones.
+  - Write legibly. Notes only you can read are worthless to anyone helping you
+    or taking over your situation.
+  - Document EVERYTHING you hear on the net, not just what applies to your task.
+  - Include specifics: addresses, phone numbers, hours, road names, directions,
+    names. Vague notes are not actionable.
+  - Your notes will be used in thirty minutes to plan the convoy. Write like
+    your route depends on it — because it does.
+
+  TIP BOX:
+    "If the grid goes down and stays down, the information you wrote on that
+    piece of paper may be the only intelligence you have. There's no cloud backup,
+    no phone to check, no way to look it up again. Your notes are your database.
+    Write clearly enough that someone else could act on them if you couldn't.
+    That's the standard."
+
+SECTION: Before You Send Them Out — Checklist (7-row grid table)
+  Columns: checkbox | Item | Note
+  Rows:
+    EOC students identified (2–3) | Confirm before anyone leaves
+    Net frequency established | Announce GMRS simplex channel to full class
+    Task cards distributed | No one empty-handed
+    Pen and paper confirmed | Every survivor needs something to write on
+    Radios tested | Quick comms check before dispersing
+    Timer / return signal set | Defined end time or agreed signal
+    High-priority task noted | Task N (November) medical emergency — watch triage
+
+================================================================================
+PART 2 — DEBRIEF GUIDE
+================================================================================
+
+Run immediately after survivors return. Target 15–20 minutes maximum.
+Resist going task-by-task. Hit these five broad themes and move.
+
+TASK REFERENCE TABLE (at top of debrief section, before teaching points):
+  Compact table, all 16 tasks, columns:
+    Ltr | Call | Task Summary | Key Relationships / Discussion Points
+  Task N row highlighted in light red (#FFF0F0).
+  Table is read-only reference — instructor pulls discussion points from it.
+  Rows (in order N, A, C, D, E, L, K, B, G, P, F, J, O, H, I, M):
+
+  N  November  Medical emergency — father with chest pain
+               HIGH PRIORITY. Did Net Control triage this correctly?
+               Route blocked by K/J (blocked_road). EOC must synthesize both.
+
+  A  Alpha     Weather request + neighbor status reports
+               FEEDS C and D — Alpha has eyes on grandma and uncle addresses.
+               If A and C/D were on net simultaneously, did EOC connect them?
+
+  C  Charlie   Locate elderly grandmother at [addr_grandma main_road]
+               Answered by A's boots-on-ground report.
+               Classic cross-survivor intel opportunity.
+
+  D  Delta     Locate uncle and family at [addr_uncle main_road]
+               Also answered by A. Did EOC route A's intel to D?
+
+  E  Echo      Pet/animal shelter with large animal capacity
+               CONTRADICTION with L — Echo drove flooded_road ~90 min before
+               Lima reported it completely flooded. Did EOC catch timeline shift?
+
+  L  Lima      Report severe flooding at [flooded_road] crossing
+               More recent than Echo — supersedes it. Critical for routing.
+               FEEDS M (fire dept water distribution intel on same card).
+
+  K  Kilo      Report downed power lines at [blocked_road]/[main_road] junction
+               CONTRADICTION with B (Bravo reported it clear earlier).
+               K is more recent. Blocks main route — critical for N, J, B, G, P.
+
+  B  Bravo     Propane availability
+               CONTRADICTION with K on junction timing.
+               CONFIRMED by H (Hotel also carries propane exchange intel).
+
+  G  Golf      Livestock feed + gas station observation
+               CONTRADICTION with P — Golf saw gas station dark/closed;
+               Papa saw cars lined up. EOC should call to verify.
+
+  P  Papa      Gasoline availability — default convoy target
+               CONTRADICTION with G on gas station status.
+               Quality of this intel directly determines convoy success.
+
+  F  Foxtrot   Repeater programming + pharmacy intel
+               OVERLAPS J (both carry antibiotic intel).
+               CONFIRMED by O (Oscar reports 2m repeater on emergency power).
+
+  J  Juliet    Pharmacy — antibiotics for child ear infection
+               OVERLAPS F. Also observed blocked_road lines (same as K).
+               Personally verified chain pharmacy out of stock.
+
+  O  Oscar     Waste disposal + repeater status
+               Confirms 70cm repeaters all down.
+               Reports one 2m repeater on emergency power.
+
+  H  Hotel     Pass message to employer
+               Carries propane exchange intel (all sold out, cash only).
+               Confirms and adds detail to B's propane request.
+
+  I  India     Pass message to loved one with authentication
+               Authentication teaching point — did EOC handle code word correctly?
+
+  M  Mike      Water purification + distribution
+               Fire dept water distribution. Churches serving meals.
+               Good entry point for primary/secondary resource discussion.
+
+TEACHING POINT 1: Survivor Stress vs. EOC Triage
+  Core idea: Survivors feel genuine urgency about their task — realistic.
+  Creates natural tension on a single shared channel.
+  EOC must absorb that pressure without letting it dictate order of operations.
+  EOC also balances: how much to research independently vs. wait for
+  boots-on-ground intel from survivors who actually have eyes on conditions.
+
+  Discussion questions:
+    - Did Net Control hold the line, or did the most persistent caller win?
+    - Was the medical emergency (Task N) recognized and elevated?
+    - When fuel or road conditions asked about, did EOC look it up or wait
+      for a survivor who had eyes on it?
+
+  TIP BOX (two talking points):
+    "Net Control's job isn't just calling on stations in order — it's making
+    judgment calls under pressure. A survivor asking about propane feels just
+    as urgent to them as someone calling in a medical emergency. Net Control has
+    to hold both realities at once and still get the order right."
+
+    "If someone asks about fuel availability and you Google it, you'll find
+    hours and addresses — but none of that tells you whether the station has
+    power, has gas in the ground, or is even open. The only person who can tell
+    you that is someone who just drove past it. Learn when the internet helps and
+    when you need to wait for a survivor report."
+
+TEACHING POINT 2: Primary Sources Will Be Gone. Know Your Secondary/Tertiary.
+  In a real disaster, the obvious first choice for any resource is almost always
+  unavailable. Four specific examples:
+    - Fuel: closest station may be out of power or gas. Know next 2 options.
+      Which have generator backup?
+    - Propane: exchange racks sell out within hours. Filling stations last longer.
+      Know the nearest one.
+    - Medical/Pharmacy: chain pharmacies overwhelmed or closed. Local
+      independents often have stock when chains don't.
+    - General rule: identify primary, secondary, and tertiary source for every
+      critical resource NOW — before you need them.
+
+  TIP BOX:
+    "The homework I'm giving you isn't written down — it's mental. Drive your
+    area. Know where the second gas station is. Know if the farm supply store
+    carries propane. Know which pharmacy is locally owned. That knowledge is
+    worth more than any piece of gear you own."
+
+TEACHING POINT 3: Cash and Barter
+  Several tasks returned cash-only results — realistic when power is out.
+  Two things:
+    - Cash in small bills: $100 bill useless if seller can't make change.
+      Keep small denomination bills physically accessible, not in bank account.
+    - Barter: in extended scenarios formal currency loses utility. Fuel, food,
+      medical supplies, and labor are most common barter currencies in disasters.
+      Think about what you have that others need.
+
+TEACHING POINT 4: Routes and the Value of Local Intelligence
+  Scenario had deliberate road obstacles that should have forced EOC to reroute.
+  Directly previews the convoy.
+  Discussion questions:
+    - Did EOC incorporate road condition reports from survivors into directions?
+    - When contradictory reports came in (E vs L on flooded road), did EOC
+      resolve by recency?
+    - The convoy runs on exactly this intel. Wrong routing = convoy hits obstacle.
+
+  TIP BOX:
+    "A map tells you where the road is. A survivor tells you whether you can
+    actually drive it right now. There is no substitute for that. The person who
+    drove that road 20 minutes ago is your most valuable intelligence asset —
+    not Google Maps."
+
+TEACHING POINT 5: Passing Messages Strategically
+  Two real considerations most people haven't thought about:
+
+  OPERATIONAL SECURITY:
+    When you call the EOC to ask about a family member, you are broadcasting:
+    - That a specific person lives at a specific address.
+    - Whether they live alone.
+    - Their age, health, and vulnerability.
+    In a disaster with potential for looting or predatory behavior, that has
+    real consequences. Think before you transmit.
+
+  AUTHENTICATION — did the message actually get through?
+    - Simple approach: tell EOC to ask your contact something only they'd know
+      (what kind of car you drive, dog's name). Correct answer = message delivered.
+    - Pre-planned approach: establish a family communication plan NOW — a code
+      word or question/answer agreed on before any disaster. Faster, more secure.
+    - Employer messages: use employee number or project reference — something
+      your employer recognizes but a stranger wouldn't.
+
+  TIP BOX:
+    "Plan this before you need it. Sit down with your family and agree on a
+    passphrase. Write it somewhere physical. If your radio is ever the only way
+    to reach someone, you'll be glad you did."
+
+================================================================================
+PART 3 — CONVOY MISSION BRIEF
+================================================================================
+
+Red header banner. Delivered immediately after debrief.
+Convoy is the capstone of Day 2 — everything applied in the real world.
+
+SECTION: Selecting the Mission
+  Default target: Task P (Papa) fuel run to gas station within ~5 miles.
+  Rules:
+  - Use only information gathered during the scenario — no new research.
+  - If contradictory intel exists, resolve with class before departure.
+  - All inter-vehicle communication uses radio only.
+
+  TIP BOX:
+    "If class documentation was poor and you don't have a confirmed destination,
+    use it as a teaching moment: 'This is why we document. We can't execute a
+    mission on information we don't have.'"
+
+SECTION: Convoy Brief Checklist (7-row grid table)
+  Columns: checkbox | Item | Detail
+  Rows:
+    Objective  | State mission in one sentence: "We are conducting a convoy
+                 supply run to [LOCATION] based on intelligence gathered during
+                 the scenario."
+    Route      | Brief planned route including known obstacles and alternates.
+                 Everyone confirms written down before moving.
+    Frequency  | Confirm convoy channel. All vehicles monitor and transmit
+                 on this frequency only.
+    Vehicle order | Assign lead, trail, middle. Lead does not outpace convoy.
+    Rally point | Designate regroup location if comms lost or vehicle has problem.
+    Rules       | No vehicle breaks from convoy without announcing on net.
+                  Net Control maintains accountability of all vehicles at all times.
+    Return plan | State how and when group returns to venue; how course wraps up.
+
+SECTION: During the Convoy
+  - Net Control makes periodic check-ins — keep the net active.
+  - Call out landmarks and turns over radio as you approach them.
+  - Route obstacle encountered: Net Control calls all-stop, convoy holds,
+    route decision made over the net before anyone moves.
+  - Maintain radio discipline — live application of everything taught.
+
+SECTION: Wrap-Up After the Convoy
+  - Brief debrief in parking lot or classroom — 5 minutes.
+  - "What worked? What would you change?"
+  - Tie it back: quality of the intel determined quality of the mission.
+  - Transition to final manual pages and close out the course.
+
+================================================================================
+DESIGN DECISIONS & NOTES FOR REBUILD
+================================================================================
+
+WHY REPORTLAB:
+  pdfkit+wkhtmltopdf was evaluated but had system dependency issues. reportlab
+  is pure Python, reliable, and produces consistent output. All PDFs use
+  SimpleDocTemplate with onFirstPage/onLaterPages footer callbacks.
+
+WHY SEED=42:
+  Assignment distribution uses random.seed(42) so the facilitator reference
+  and student PDFs always match on re-runs. Change the seed if you want a
+  different distribution.
+
+FILL-IN-BLANK MODE:
+  All location-specific cfg values are replaced with BLANK = "_______________"
+  before tasks are built. Output files get _BLANK suffix so they don't
+  overwrite real location runs.
+
+CONFLICT SYSTEM:
+  Conflicts are defined per-task as a list of letters. Enforcement is
+  bidirectional — if A conflicts with C, C also cannot go to A's student.
+  The distribute() function checks both directions.
+
+TASK ORDER IN PRINT-ALL:
+  Facilitator reference is always first, then students in order (S-01 to S-N).
+  This makes it easy to cut the facilitator pages off the front before
+  distributing.
+
+EOC COMPOSITION:
+  For classes of 16: one student handles EOC, rest are survivors.
+  For classes of 17-30: 2-3 students handle EOC. The facilitator pulls these
+  students by name before distributing cards — they do not get a task card.
+  (EOC composition is a logistical decision made at runtime, not automated.)
+
+BRIEF/DEBRIEF SCRIPT:
+  generate_brief_debrief.py is location-agnostic except for LOCATION and VENUE
+  at the top. The debrief teaching points do NOT reference specific road names —
+  they are kept generic so the same script works for any location with no edits
+  beyond the two variables. The task reference table in the debrief does contain
+  the Jackson road names as illustrative examples; those should be updated
+  manually for new locations or left generic.
+
+================================================================================
+END OF REBUILD SPEC
+================================================================================

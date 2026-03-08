@@ -1,0 +1,475 @@
+================================================
+ZERO TO HERO -- ALL STUDENT TASKS
+Henderson, Texas
+Class size: 20  |  Tasks distributed: 20
+================================================
+
+================================================
+!! HIGH PRIORITY -- REPORT IMMEDIATELY TO NET CONTROL !!
+================================================
+*Task N (November)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Your father (68) has been experiencing chest pain and left arm numbness for approximately 45 minutes. He is conscious but pale and sweating. You need the fastest passable route to the nearest hospital.
+- You cannot wait for an ambulance -- you must drive him. Ask the EOC to confirm route conditions and identify any obstructions.
+
+*Information you can provide:*
+- Your father took his blood pressure medication this morning.
+- You have a reliable truck with approximately three-quarters of a tank of gas.
+- A neighbor has offered their 4WD truck and can drive if needed.
+- You are aware that Main St near the Rusk Ave junction may have an obstruction -- the EOC should confirm or route around it.
+- You have a basic first aid kit in the truck.
+- Your father has a history of high blood pressure but no prior cardiac events.
+
+[S-01]
+================================================
+
+================================================
+*Task A (Alpha)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Request the current weather forecast and any incoming severe weather warnings.
+
+*Information you can provide:*
+- Your address is 412 Rusk Ave. Your home was unaffected.
+- Your neighbor at 416 Rusk Ave evacuated safely before their home was damaged. You have not seen or heard from them since.
+- Your neighbors at 408 Rusk Ave are unaffected and safely at home. You can relay messages to or from them if needed.
+- Water in the roadside ditch along Rusk Ave near FM 1798 was rising rapidly this morning.
+- A church about a half mile south on Rusk Ave appeared to have lights on -- possibly running on a generator.
+- A utility truck convoy was spotted heading east on US-79 approximately 2 hours ago.
+
+[S-02]
+================================================
+
+================================================
+*Task B (Bravo)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Determine the nearest location where propane filling or exchange is available.
+- Obtain payment methods, possible driving routes from your location, and cost.
+- Your location is: 200 N Mill St, Henderson, TX 75652.
+- You may be asked to use this information in a future scenario -- document it accurately.
+
+*Information you can provide:*
+- Propane exchange racks at the gas station on US-79 S appeared completely empty when you drove past.
+- You have approximately 3 days of propane remaining -- not an immediate emergency.
+- A neighbor mentioned that Tractor Supply on US-79 S was open as of yesterday, but you have not confirmed today.
+- When you drove through this morning, the Main St / Rusk Ave junction was clear -- no obstructions.
+- Rusk Ave has debris but is passable in a truck.
+- You have approximately half a tank of gas in your vehicle.
+
+[S-03]
+================================================
+
+================================================
+*Task C (Charlie)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Determine the status of your elderly grandmother, Ruth Blevins, who lives at 416 Rusk Ave. She is 91 years old, lives alone, and you have not heard from her since the disaster.
+- If no information is available, leave your contact information and check back regularly.
+
+*Information you can provide:*
+- Last contact was 2 days before the disaster -- she was in good health at that time.
+- She drives a red Ford Ranger, usually parked in the driveway.
+- She takes daily heart medication and likely has only 3-4 days of supply remaining.
+- Her neighbor at 418 Rusk Ave has also not been heard from.
+- She does not have a radio or generator.
+- You have a spare key to her home if someone is able to check on her.
+
+[S-04]
+================================================
+
+================================================
+*Task D (Delta)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Determine the status of your uncle Dale who lives at 408 Rusk Ave with his wife and daughters (ages 16, 13, and 10). You have not heard from them since the disaster.
+- If no information is available, leave your contact information and check back regularly.
+
+*Information you can provide:*
+- Your uncle's house is on high ground -- flooding is unlikely at 408 Rusk Ave.
+- His teenage daughter knows basic radio operation.
+- He has a tractor and spare fuel cans in the barn.
+- The family was planning to shelter in place before the disaster.
+- Your uncle is a retired EMT with a first aid kit.
+- Their home has a woodstove and could potentially shelter additional people.
+
+[S-05]
+================================================
+
+================================================
+*Task E (Echo)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Request the location of emergency shelters that accept pets. Obtain passable route information from your location.
+- You may be asked to use this information in a future scenario -- document it thoroughly.
+
+*Information you can provide:*
+- You have 2 dogs and a horse -- you need a facility that can accommodate large animals.
+- You drove through the FM 1798 creek crossing about 90 minutes ago. The water was high but the road was still passable.
+- You spotted what appeared to be a Red Cross vehicle near the high school.
+- The fairgrounds had lights and activity last night, possibly running on a generator.
+- You have a horse trailer available and could assist with other animal transport if needed.
+- A neighbor mentioned hearing there may be a shelter at the National Guard armory -- unconfirmed.
+
+[S-06]
+================================================
+
+================================================
+*Task F (Foxtrot)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Request programming information for the 3 nearest amateur radio repeaters in your area.
+- You may be asked to use this information in a future scenario -- document it accurately so you can program them.
+
+*Information you can provide:*
+- You drove past a chain pharmacy on US-79 S -- staff confirmed completely out of antibiotics.
+- A nearby pharmacy (large retailer) appeared to be open with a line of cars at the drive-through.
+- A neighbor who is a ham radio operator mentioned that a local repeater is running on emergency power.
+- All traffic lights in the area appear to be dark.
+- The fire department on US-79 S appeared fully staffed with trucks staged outside.
+- You saw a generator truck parked outside the courthouse.
+
+[S-07]
+================================================
+
+================================================
+*Task G (Golf)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Request the nearest location with livestock feed available. Determine feed types, payment methods, and passable routes.
+- Your location is: 200 N Mill St, Henderson, TX 75652.
+- You may be asked to use this information in a future scenario -- document it accurately.
+
+*Information you can provide:*
+- The Murphy USA on US-79 S appeared completely dark and closed when you passed earlier.
+- Tractor Supply on US-79 S had a half-full parking lot and appeared to be open.
+- A neighbor has extra hay bales they are willing to share at no cost.
+- FM 1798 at the creek crossing was completely flooded and impassable as of about an hour ago.
+- You spotted a utility crew staging near the Rusk Ave / US-79 interchange.
+- You have a flatbed truck available if large quantities of feed need to be transported.
+
+[S-08]
+================================================
+
+================================================
+*Task H (Hotel)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Pass a message to your employer outside the disaster zone -- you are safe but unable to come to work due to hazardous conditions. Include something beyond your name to identify yourself. Request confirmation the message was received.
+- This message will actually be passed -- please use real information. You may use the Radio Made Easy phone number from your homework if you prefer.
+
+*Information you can provide:*
+- Propane exchange racks at the gas station on US-79 S were completely empty.
+- A neighbor told you that some propane filling stations are still operational -- cash only, one tank per person.
+- Your neighborhood has significant tree debris but roads are passable.
+- You observed a chainsaw crew actively clearing Rusk Ave near the US-79 junction.
+- You plan to shelter in place for at least the next 48 hours.
+- You have a portable hand-crank radio and will continue monitoring the emergency frequency.
+
+[S-09]
+================================================
+
+================================================
+*Task I (India)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Pass a message to a loved one outside the disaster zone informing them of your location and status. Request confirmation from the EOC that the message was delivered.
+- Ask the EOC to provide some form of authentication from your loved one (a safe word, inside joke, etc.) so you know the message reached the right person.
+- This message will actually be passed -- use real information. The EOC will clearly identify this as a training exercise.
+
+*Information you can provide:*
+- Your home is structurally sound -- only minor basement flooding.
+- You have food and water for approximately 4 days.
+- You heard sirens heading north approximately 30 minutes ago.
+- A neighbor told you a local bridge is intact and passable.
+- You have a hand-crank radio and have been monitoring the local AM station for updates.
+- You spotted a National Guard vehicle heading toward town on US-79.
+
+[S-10]
+================================================
+
+================================================
+*Task J (Juliet)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Request the location of the nearest pharmacies with antibiotic availability. Confirm operating hours, payment methods, and passable driving routes.
+- You specifically need antibiotics for a child's ear infection.
+- Your location is: 200 N Mill St, Henderson, TX 75652.
+- You may be asked to use this information in a future scenario -- document it accurately.
+
+*Information you can provide:*
+- Your child has had a fever for 2 days -- antibiotics are needed but not immediately life-threatening.
+- You personally drove to a chain pharmacy and were turned away -- completely out of antibiotics.
+- A neighbor who just returned from a large retailer said the pharmacy there still has limited stock.
+- You observed power lines down at Main St at the Rusk Ave junction -- the road appeared partially blocked.
+- You have approximately 2 days of children's Tylenol to manage the fever in the meantime.
+- Your route into town runs through Main St -- the downed lines will affect your travel.
+
+[S-11]
+================================================
+
+================================================
+*Task K (Kilo)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Report downed power lines and outages on your road.
+
+*Information you can provide:*
+- Power lines are down at Main St at the Rusk Ave junction -- laying across the westbound lane.
+- You drove through just before the lines came down. The road is now impassable westbound.
+- A tree is also down on the shoulder of Rusk Ave, approximately 1 mile south of US-79.
+- No utility crews have been seen in the area yet.
+- Your neighbor has a whole-home generator and is offering to charge devices for nearby residents.
+- The Murphy USA on US-79 S had lights on and appeared to be operational when you passed.
+
+[S-12]
+================================================
+
+================================================
+*Task L (Lima)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Report severe flooding and an impassable road.
+- Your location: FM 1798 at the creek crossing near Rusk Ave -- water is completely over the road.
+
+*Information you can provide:*
+- The water at the FM 1798 creek crossing is completely over the road and appears to still be rising.
+- You observed a neighbor's livestock loose on Rusk Ave near the flooding.
+- An elderly man was seen attempting to cross the flooded road on foot -- EOC should be aware.
+- Bottled water is being distributed at local fire departments.
+- Your home is on high ground and unaffected.
+- You have not seen any emergency vehicles or road crews in this area.
+
+[S-13]
+================================================
+
+================================================
+*Task M (Mike)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Request information on water distribution locations and water purification methods using common household resources.
+- Your location is: 200 N Mill St, Henderson, TX 75652.
+- You may be asked to use this information in a future scenario -- document it accurately.
+
+*Information you can provide:*
+- A neighbor told you that fire departments in the area have bottled water available.
+- You have a gravity filter and enough supplies for approximately 2 weeks.
+- FM 1798 creek near your location is visibly contaminated with debris and runoff -- do not use untreated.
+- A neighbor has been collecting rainwater in clean containers as a short-term backup.
+- Hot meals are reportedly being served at local churches from 7am to 7pm.
+- Church parking lots on US-79 S had vehicles and activity when you last passed.
+
+[S-14]
+================================================
+
+================================================
+*Task O (Oscar)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Request information on safe waste disposal methods -- the sewer system in your area is no longer functioning.
+
+*Information you can provide:*
+- All 70cm amateur repeaters in your area appear to be down -- you have tried several.
+- A neighbor who is a ham radio operator told you there is one 2m repeater on a nearby ridge running on emergency power, but does not know which one.
+- You have a camp toilet and approximately 1 week of supplies.
+- A nearby neighbor is burning household trash in a barrel -- raising health concerns.
+- A noticeable sewer smell is present in the low-lying areas of your neighborhood.
+- You heard from a neighbor that the local water treatment plant may be offline.
+
+[S-15]
+================================================
+
+================================================
+*Task P (Papa)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Request information on gasoline availability -- location, operating hours, price, payment methods, and route from your location.
+- Your location is: 200 N Mill St, Henderson, TX 75652.
+- You may be asked to use this information in a future scenario -- document it accurately.
+
+*Information you can provide:*
+- You saw cars lined up at Murphy USA on US-79 S -- it appeared to be operational.
+- A handwritten sign at the pump stated cash only, 5-gallon limit per vehicle.
+- The line was approximately 20-30 vehicles when you observed -- expect a significant wait.
+- The gas station on the highway appeared dark and closed.
+- You have a 5-gallon gas can and a siphon hose available if needed.
+- A local bridge you know of is intact and passable.
+
+[S-16]
+================================================
+
+================================================
+!! HIGH PRIORITY -- REPORT IMMEDIATELY TO NET CONTROL !!
+================================================
+*Task N (November)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Your father (68) has been experiencing chest pain and left arm numbness for approximately 45 minutes. He is conscious but pale and sweating. You need the fastest passable route to the nearest hospital.
+- You cannot wait for an ambulance -- you must drive him. Ask the EOC to confirm route conditions and identify any obstructions.
+
+*Information you can provide:*
+- Your father took his blood pressure medication this morning.
+- You have a reliable truck with approximately three-quarters of a tank of gas.
+- A neighbor has offered their 4WD truck and can drive if needed.
+- You are aware that Main St near the Rusk Ave junction may have an obstruction -- the EOC should confirm or route around it.
+- You have a basic first aid kit in the truck.
+- Your father has a history of high blood pressure but no prior cardiac events.
+
+[S-17]
+================================================
+
+================================================
+*Task A (Alpha)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Request the current weather forecast and any incoming severe weather warnings.
+
+*Information you can provide:*
+- Your address is 412 Rusk Ave. Your home was unaffected.
+- Your neighbor at 416 Rusk Ave evacuated safely before their home was damaged. You have not seen or heard from them since.
+- Your neighbors at 408 Rusk Ave are unaffected and safely at home. You can relay messages to or from them if needed.
+- Water in the roadside ditch along Rusk Ave near FM 1798 was rising rapidly this morning.
+- A church about a half mile south on Rusk Ave appeared to have lights on -- possibly running on a generator.
+- A utility truck convoy was spotted heading east on US-79 approximately 2 hours ago.
+
+[S-18]
+================================================
+
+================================================
+*Task B (Bravo)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Determine the nearest location where propane filling or exchange is available.
+- Obtain payment methods, possible driving routes from your location, and cost.
+- Your location is: 200 N Mill St, Henderson, TX 75652.
+- You may be asked to use this information in a future scenario -- document it accurately.
+
+*Information you can provide:*
+- Propane exchange racks at the gas station on US-79 S appeared completely empty when you drove past.
+- You have approximately 3 days of propane remaining -- not an immediate emergency.
+- A neighbor mentioned that Tractor Supply on US-79 S was open as of yesterday, but you have not confirmed today.
+- When you drove through this morning, the Main St / Rusk Ave junction was clear -- no obstructions.
+- Rusk Ave has debris but is passable in a truck.
+- You have approximately half a tank of gas in your vehicle.
+
+[S-19]
+================================================
+
+================================================
+*Task C (Charlie)*
+Henderson, Texas
+
+You are within the disaster zone without cell phone,
+internet access, or electricity.
+
+*Tasks to complete:*
+- Establish radio communications with the Emergency Operations Center (EOC).
+- Determine the status of your elderly grandmother, Ruth Blevins, who lives at 416 Rusk Ave. She is 91 years old, lives alone, and you have not heard from her since the disaster.
+- If no information is available, leave your contact information and check back regularly.
+
+*Information you can provide:*
+- Last contact was 2 days before the disaster -- she was in good health at that time.
+- She drives a red Ford Ranger, usually parked in the driveway.
+- She takes daily heart medication and likely has only 3-4 days of supply remaining.
+- Her neighbor at 418 Rusk Ave has also not been heard from.
+- She does not have a radio or generator.
+- You have a spare key to her home if someone is able to check on her.
+
+[S-20]
+================================================

@@ -1,0 +1,12 @@
+# Generated PDFs
+Student_*.pdf
+Facilitator_Reference*.pdf
+PrintAll_*.pdf
+ZTH_Brief_Debrief.pdf
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
