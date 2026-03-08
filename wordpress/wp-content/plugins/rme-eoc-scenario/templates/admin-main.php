@@ -1,7 +1,7 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
 <div class="wrap rme-eoc-wrap">
     <h1>EOC Scenario Generator</h1>
-    <p class="description">Generate location-customized student task cards and facilitator materials for amateur radio EOC training exercises.</p>
+    <p class="description">Generate location-customized student task cards and facilitator materials for radio emergency communications (emcom) training exercises.</p>
 
     <div id="rme-eoc-step-1" class="rme-eoc-section">
         <h2>Step 1: Location Setup</h2>

@@ -2,7 +2,7 @@
 
 Zero to Hero Emergency Communications Scenario Generator for Radio Made Easy.
 
-Generates location-customized student task cards and facilitator reference materials for amateur radio EOC training exercises.
+Generates location-customized student task cards and facilitator reference materials for radio emergency communications (emcom) training exercises.
 
 ## Setup
 

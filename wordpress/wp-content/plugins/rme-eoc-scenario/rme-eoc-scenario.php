@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: RME EOC Scenario Generator
- * Description: Generate location-customized student task cards and facilitator materials for amateur radio EOC training exercises.
+ * Description: Generate location-customized student task cards and facilitator materials for radio emergency communications (emcom) training exercises.
  * Version: 1.0.0
  * Author: Radio Made Easy
  * Text Domain: rme-eoc-scenario
